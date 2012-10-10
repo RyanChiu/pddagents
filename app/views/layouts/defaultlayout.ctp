@@ -383,6 +383,7 @@ echo $scripts_for_layout;
 						}
 						?>
 						<?php
+						/*
 						if (in_array($userinfo['id'], array(1, 2))) {//HARD CODE: means an administrator whoes id is 1 or 2
 							$menuitemscount++;
 							//if cur route matches this menu item, then set the number to inform the js code
@@ -418,6 +419,7 @@ echo $scripts_for_layout;
 						</li>
 						<?php 
 						}
+						*/
 						?>
 						<li>
 						<?php

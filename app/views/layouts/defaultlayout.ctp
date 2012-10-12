@@ -383,7 +383,6 @@ echo $scripts_for_layout;
 						}
 						?>
 						<?php
-						/*
 						if (in_array($userinfo['id'], array(1, 2))) {//HARD CODE: means an administrator whoes id is 1 or 2
 							$menuitemscount++;
 							//if cur route matches this menu item, then set the number to inform the js code
@@ -419,7 +418,6 @@ echo $scripts_for_layout;
 						</li>
 						<?php 
 						}
-						*/
 						?>
 						<li>
 						<?php
@@ -482,12 +480,8 @@ echo $scripts_for_layout;
 				<div id="dropmenu_toolbox_admin" class="dropmenudiv_e"
 					style="width: 180px;">
 					<?php
-					echo $html->link('<font><b>Update LC-Dating</b></font>',
+					echo $html->link('<font><b>Update Cams-1</b></font>',
 							array('controller' => 'trans', 'action' => 'updtoolbox', 'site' => 1),
-							null, false, false
-					);
-					echo $html->link('<font><b>Update SPC-Cam</b></font>',
-							array('controller' => 'trans', 'action' => 'updtoolbox', 'site' => 3),
 							null, false, false
 					);
 					?>
@@ -524,18 +518,8 @@ echo $scripts_for_layout;
 				<div id="dropmenu_toolbox_normal" class="dropmenudiv_e"
 					style="width: 120px;">
 					<?php
-					/*
-					echo $html->link('<font><b>HMS</b></font>',
-							array('controller' => 'trans', 'action' => 'toolbox', 'site' => 2),
-							null, false, false
-					);
-					*/
-					echo $html->link('<font><b>LC-Dating</b></font>',
+					echo $html->link('<font><b>Cams-1</b></font>',
 							array('controller' => 'trans', 'action' => 'toolbox', 'site' => 1),
-							null, false, false
-					);
-					echo $html->link('<font><b>SPC-Cam</b></font>',
-							array('controller' => 'trans', 'action' => 'toolbox', 'site' => 3),
 							null, false, false
 					);
 					?>

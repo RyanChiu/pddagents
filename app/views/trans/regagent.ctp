@@ -87,13 +87,13 @@ if ($userinfo['role'] == 1) {
 	<tr>
 		<td>
 		<div style="float:left">Username : </div>
-		<div style="float:left">
+		<div style="float:left; display: none;">
 		<?php
 		echo '('
 			. $form->checkbox(
 				'Account.auto',
 				array(
-					'checked' => 'checked',
+					//'checked' => 'checked',
 					'style' => 'border:0px;width:16px;'
 				)
 			)

@@ -119,16 +119,16 @@ class TransController extends AppController {
 	}
 	
 	function __sendemail($subject = 'empty', $content = 'empty',
-		$from = 'support@PayDirtDollars.com',
-		$mailto = 'support@PayDirtDollars.com',
-		$replyto = 'support@PayDirtDollars.com') {
+		$from = 'admin@PayDirtDollars.com',
+		$mailto = 'admin@PayDirtDollars.com',
+		$replyto = 'admin@PayDirtDollars.com') {
 		/* SMTP Options */
 		$this->Email->smtpOptions = array(
 			//'request' => array('uri' => array('scheme' => 'https')),
 			'port'=>'25',
 			'timeout'=>'60',
 			'host' => 'smtpout.secureserver.net',
-			'username'=>'support@PayDirtDollars.com',
+			'username'=>'admin@PayDirtDollars.com',
 			'password'=>'Adutta11'
 		);
 		$this->Email->from = '<' . $from . '>';
@@ -636,7 +636,7 @@ class TransController extends AppController {
 						'Your PayDirtDollars Password',
 						"Hi,\nYour PayDirtDollars password is:" . $r['Account']['originalpwd'] . "\n"
 						. "\nThanks,\nPayDirtDollars webmaster.",//must use " instead of ' at this $content parameter
-						'support@PayDirtDollars.com',
+						'admin@PayDirtDollars.com',
 						$_r['Company']['manemail']
 					);
 					if ($issent) {
@@ -669,7 +669,7 @@ class TransController extends AppController {
 						'Your PayDirtDollars Password',
 						"Hi,\nYour PayDirtDollars password is:" . $r['Account']['originalpwd'] . "\n"
 						. "\nThanks,\nPayDirtDollars webmaster.",//must use " instead of ' at this $content parameter
-						'support@PayDirtDollars.com',
+						'admin@PayDirtDollars.com',
 						$_r['Agent']['email']
 					);
 					if ($issent) {
@@ -703,8 +703,8 @@ class TransController extends AppController {
 			$issent = $this->__sendemail(
 				$this->data['FakeContactUs']['subject'],
 				"From:" . $this->data['FakeContactUs']['email'] . "\n\n" . $this->data['FakeContactUs']['message'],
-				"support@PayDirtDollars.com",
-				"support@PayDirtDollars.com",
+				"admin@PayDirtDollars.com",
+				"admin@PayDirtDollars.com",
 				$this->data['FakeContactUs']['email']
 			);
 			$redirecturl = '';
@@ -1078,8 +1078,8 @@ class TransController extends AppController {
 							. $this->data['Account']['username'] 
 							. "' created, please check it out.",
 						"empty",
-						"support@PayDirtDollars.com",
-						"newagents@PayDirtDollars.com"
+						"admin@PayDirtDollars.com",
+						"admin@PayDirtDollars.com"
 					);
 					/*redirect to some page*/ 
 					$this->Session->setFlash('Agent "' 
@@ -1878,10 +1878,10 @@ class TransController extends AppController {
 				/*
 				$mailto = ''
 					//. strtolower($r['ViewAgent']['officename']) . '_qa@cleanchattersinc.com';
-					. 'support@PayDirtDollars.com';
+					. 'admin@PayDirtDollars.com';
 				if ($this->__sendemail(
 						$subject, $content,
-						'support@PayDirtDollars.com',
+						'admin@PayDirtDollars.com',
 						$mailto
 					) != true) {
 					$fmsg = '(Failed to email out.<0>)';
@@ -1889,9 +1889,9 @@ class TransController extends AppController {
 				*/
 				if ($this->__sendemail(
 						$subject, $content,
-						'support@PayDirtDollars.com',
+						'admin@PayDirtDollars.com',
 						//'qa@cleanchattersinc.com'
-						'agentlogs@PayDirtDollars.com'
+						'admin@PayDirtDollars.com'
 					) != true) {
 					$fmsg = '(Failed to email out.<1>)';
 				};

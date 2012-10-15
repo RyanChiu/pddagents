@@ -13,7 +13,7 @@ echo $javascript->link('jQuery/Datepicker/jquery-1.3.2.min');
 
 /*for cufon*/
 echo $javascript->link('cufon/cufon-yui');
-echo $javascript->link('cufon/AR_DARLING_500.font');
+echo $javascript->link('cufon/Chiller_400.font');
 
 echo $scripts_for_layout;
 
@@ -28,32 +28,17 @@ echo $scripts_for_layout;
 		<div id="border">
 			<!-- Start Header -->
 			<div class="header">
-				<div style="float: left; padding: 0px 0px 0px 16px;">
+				<div style="float: left; padding: 0px 0px 0px 6px;">
 					<p>&nbsp;</p>
-					<p>
-						<span lang="EN-US"
-							style="font-size: 72.0pt; line-height: 115%; color: #FFC000">P.D.</span>
-					</p>
+					<a href="http://www.myspace.com/paydirtau/radio">
+					<?php echo $html->image('k10387380.jpg', array('style' => 'height:90px; border: 0px;')); ?>
+					</a>
 				</div>
 				<div style="float: right; padding: 0px 0px 0px 0px;">
-					<p>
-						<span lang="EN-US"
-							style="font-size: 16.0pt; line-height: 115%; color: #FFC000">WWW.</span><span
-							lang="EN-US"
-							style="font-size: 72.0pt; line-height: 115%; color: #FFC000">p</span><span
-							lang="EN-US"
-							style="font-size: 48.0pt; line-height: 115%; color: #FFC000">ay</span><span
-							lang="EN-US"
-							style="font-size: 72.0pt; line-height: 115%; color: #FFC000">d</span><span
-							lang="EN-US"
-							style="font-size: 48.0pt; line-height: 115%; color: #FFC000">irt</span><span
-							lang="EN-US"
-							style="font-size: 72.0pt; line-height: 115%; color: #FFC000">d</span><span
-							lang="EN-US"
-							style="font-size: 48.0pt; line-height: 115%; color: #FFC000">ollars</span><span
-							lang="EN-US"
-							style="font-size: 6; line-height: 115%; color: #FFC000">.COM</span>
-					</p>
+					<font
+						style="font-size: 48.0pt; font-weight: bold; color: #dc9e38">www</font><font
+						style="font-size: 72.0pt; font-weight: bold; color: #dc9e38">.PayDirtDollars.</font><font
+						style="font-size: 48.0pt; font-weight: bold; color: #dc9e38">com</font>
 				</div>
 			</div>
 			<!-- End Header -->

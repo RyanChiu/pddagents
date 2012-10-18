@@ -202,7 +202,7 @@ if (!empty($rs)) {
 		<th><?php echo $exPaginator->sort('Earnings', 'TmpStats.earnings'); ?></th>
 		<th><?php echo $exPaginator->sort('Payouts', 'TmpStats.payouts'); ?></th>
 		<?php
-		} else if ($userinfo['role'] == 1) {
+		} else if ($userinfo['role'] == -1) {
 		?>
 		<th <?php echo in_array($selsite, array(-1, -2)) ? 'class="naClassHide"' : ''; // just do not show for the some site?>>Payments</th>
 		<?php
@@ -354,7 +354,7 @@ if (!empty($rs)) {
 		<td><?php echo '$' . $r['TmpStats']['earnings']; ?></td>
 		<td><?php echo '$' . $r['TmpStats']['payouts']; ?></td>
 		<?php
-		} else if ($userinfo['role'] == 1) {
+		} else if ($userinfo['role'] == -1) {
 		?>
 		<td><?php echo '$' . ($r['TmpStats']['earnings'] - $r['TmpStats']['payouts'])?></td>
 		<?php
@@ -405,7 +405,7 @@ if (!empty($rs)) {
 		<td class="totals"><?php echo '$' . sprintf('%.2f', $pagetotals['earnings']); ?></td>
 		<td class="totals"><?php echo '$' . sprintf('%.2f', $pagetotals['payouts']); ?></td>
 		<?php
-		} else if ($userinfo['role'] == 1) {
+		} else if ($userinfo['role'] == -1) {
 		?>
 		<td class="totals"><?php echo '$' . sprintf('%.2f', ($pagetotals['earnings'] - $pagetotals['payouts'])); ?></td>
 		<?php
@@ -452,7 +452,7 @@ if (!empty($rs)) {
 		<td class="totals"><?php echo '$' . $totals['earnings']; ?></td>
 		<td class="totals"><?php echo '$' . $totals['payouts']; ?></td>
 		<?php
-		} else if ($userinfo['role'] == 1) {
+		} else if ($userinfo['role'] == -1) {
 		?>
 		<td class="totals"><?php echo '$' . sprintf('%.2f', ($totals['earnings'] - $totals['payouts'])); ?></td>
 		<?php 
@@ -508,7 +508,7 @@ if (!empty($rs)) {
 		<td class="totals"></td>
 		<td class="totals"></td>
 		<?php
-		} else if ($userinfo['role'] == 1) {
+		} else if ($userinfo['role'] == -1) {
 		?>
 		<td class="totals"></td>
 		<?php 
@@ -563,7 +563,7 @@ if (!empty($rs)) {
 		<td class="totals"></td>
 		<td class="totals"></td>
 		<?php
-		} else if ($userinfo['role'] == 1) {
+		} else if ($userinfo['role'] == -1) {
 		?>
 		<td class="totals"></td>
 		<?php 

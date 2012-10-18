@@ -138,7 +138,7 @@ if (!empty($rs)) {
 		}
 		?>	
 		<th><?php echo $exPaginator->sort('Raws', 'TmpStats.raws'); ?></th>
-		<th <?php echo !in_array($selsite, array(6, 7, 8)) ? '' : 'class="naClassHide"'; ?>>
+		<th <?php echo !in_array($selsite, array(-1, -2)) ? '' : 'class="naClassHide"'; ?>>
 		<?php echo $exPaginator->sort('Uniques', 'TmpStats.uniques'); ?>
 		</th>
 		<!--
@@ -193,18 +193,18 @@ if (!empty($rs)) {
 			. '<br/><i>' . (count($typesv) > 1 ? $typesv[1] : 'N/A') . '</i>';
 		?>
 		</th>
-		<th <?php echo $selsite == 2 ? 'class="naClassHide"' : ''; // HARD CODE HERE: just do not show for the site HMS?>>
+		<th <?php echo in_array($selsite, array(-1, -2)) ? 'class="naClassHide"' : ''; // just do not show for the some site?>>
 		<?php echo $exPaginator->sort('Net', 'TmpStats.net'); ?>
 		</th>
 		<?php
-		if ($userinfo['role'] == 0) {
+		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
 		?>
 		<th><?php echo $exPaginator->sort('Earnings', 'TmpStats.earnings'); ?></th>
 		<th><?php echo $exPaginator->sort('Payouts', 'TmpStats.payouts'); ?></th>
 		<?php
 		} else if ($userinfo['role'] == 1) {
 		?>
-		<th <?php echo $selsite == 2 ? 'class="naClassHide"' : ''; // HARD CODE HERE: just do not show for the site HMS?>>Payments</th>
+		<th <?php echo in_array($selsite, array(-1, -2)) ? 'class="naClassHide"' : ''; // just do not show for the some site?>>Payments</th>
 		<?php
 		}
 		?>
@@ -307,11 +307,11 @@ if (!empty($rs)) {
 			. $ajax->divEnd($divID);
 		/*
 		 * the following "if" paragraph means that:
-		 * only if it's a view by details and the site is hms (or others in the future)
+		 * only if it's a view by details and the site's is -1 or -2 (or others in the future)
 		 * which has only one type (only one type is very important here),
 		 * and then the frauds could be modified manually only by admins.
 		 */
-		if ($userinfo['role'] == 0 && $bywhat == 3 && in_array($selsite, array(2, 0, 0))) {
+		if ($userinfo['role'] == 0 && $bywhat == 3 && in_array($selsite, array(-1, -2))) {
 			echo '<div style="float:right;margin:0px 3px 0px 3px">'
 				. $html->link(
 					$html->image('iconEdit.png', array('style' => 'width:16px;height:16px;border:0px;')),
@@ -349,7 +349,7 @@ if (!empty($rs)) {
 		<td><?php echo $r['TmpStats']['sales_type1']; ?></td>
 		<td><?php echo $r['TmpStats']['net']; ?></td>
 		<?php
-		if ($userinfo['role'] == 0) {
+		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
 		?>
 		<td><?php echo '$' . $r['TmpStats']['earnings']; ?></td>
 		<td><?php echo '$' . $r['TmpStats']['payouts']; ?></td>
@@ -400,7 +400,7 @@ if (!empty($rs)) {
 		<td class="totals"><?php echo $pagetotals['sales_type1']; ?></td>
 		<td class="totals"><?php echo $pagetotals['net']; ?></td>
 		<?php
-		if ($userinfo['role'] == 0) {
+		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
 		?>
 		<td class="totals"><?php echo '$' . sprintf('%.2f', $pagetotals['earnings']); ?></td>
 		<td class="totals"><?php echo '$' . sprintf('%.2f', $pagetotals['payouts']); ?></td>
@@ -447,7 +447,7 @@ if (!empty($rs)) {
 		<td class="totals"><?php echo $totals['sales_type1']; ?></td>
 		<td class="totals"><?php echo $totals['net']; ?></td>
 		<?php
-		if ($userinfo['role'] == 0) {
+		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
 		?>
 		<td class="totals"><?php echo '$' . $totals['earnings']; ?></td>
 		<td class="totals"><?php echo '$' . $totals['payouts']; ?></td>
@@ -503,7 +503,7 @@ if (!empty($rs)) {
 		<td class="totals"></td>
 		<td class="totals"></td>
 		<?php
-		if ($userinfo['role'] == 0) {
+		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
 		?>
 		<td class="totals"></td>
 		<td class="totals"></td>
@@ -558,7 +558,7 @@ if (!empty($rs)) {
 		<td class="totals"></td>
 		<td class="totals"></td>
 		<?php
-		if ($userinfo['role'] == 0) {
+		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
 		?>
 		<td class="totals"></td>
 		<td class="totals"></td>

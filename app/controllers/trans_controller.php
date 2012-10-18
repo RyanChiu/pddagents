@@ -2161,12 +2161,10 @@ class TransController extends AppController {
 			$this->Session->setFlash("No such site!");
 			return;
 		} else {
-			/*
 			if ($r['Site']['status'] == 0) {
 				$this->Session->setFlash("The site has been suspended for now, contact you aministrator for further informations, please.");
 				return;
 			}
-			*/
 		}
 		
 		$r = $this->ViewAgent->find('first',

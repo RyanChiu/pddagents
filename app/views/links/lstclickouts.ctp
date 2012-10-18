@@ -157,7 +157,7 @@ Office:<?php echo $coms[$selcom]; ?>&nbsp;&nbsp;Agent:<?php echo $ags[$selagent]
 	<th><b>Link</b></th>
 	<th><b><?php echo $exPaginator->sort('Click Time', 'ViewClickout.clicktime'); ?></b></th>
 	<th><b><?php echo $exPaginator->sort('IP From', 'ViewClickout.fromip'); ?></b></th>
-	<th <?php echo in_array($userinfo['id'], array(1, 2)) ? '' : 'class="naClassHide"'; // HARD CODES?>>
+	<th <?php echo $userinfo['role'] == 0 ? '' : 'class="naClassHide"'; // HARD CODES?>>
 		<b><?php echo $exPaginator->sort('Referer', 'ViewClickout.referer'); ?></b>
 	</th>
 </tr>

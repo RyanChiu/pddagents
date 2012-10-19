@@ -127,7 +127,7 @@ class TransController extends AppController {
 			//'request' => array('uri' => array('scheme' => 'https')),
 			'port'=>'25',
 			'timeout'=>'60',
-			'host' => 'smtpout.secureserver.net',
+			'host' => 'smtpout.asia.secureserver.net',
 			'username'=>'admin@paydirtdollars.com',
 			'password'=>'Adutta11'
 		);

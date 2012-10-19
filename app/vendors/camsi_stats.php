@@ -13,8 +13,8 @@ if (($argc - 1) != 1) {//if there is 1 parameter and it must mean a date like '2
 /*
  * the following line will make the whole script exit if date string format is wrong
  */
-$date = __get_remote_date($argv[1], "GMT", 0);
-$date_l = __get_remote_date($argv[1], "GMT", 0, "GMT", true);
+$date = __get_remote_date($argv[1], "GMT", -5);
+$date_l = __get_remote_date($argv[1], "GMT", -5, "GMT", true);
 
 /*get the abbreviation of the site*/
 $abbr = __stats_get_abbr($argv[0]);
@@ -68,7 +68,8 @@ while ($r_push = mysql_fetch_assoc($rs_push)) {
 		 */
 		$conditions = sprintf('convert(trxtime, date) = "%s" and siteid = %d'
 			. ' and typeid = %d and agentid = %d and campaignid = "%s"',
-			$date, $siteid, $typeids[0], $agents[$campaignid], $campaignid);
+			$date, $siteid, $typeids[0], $agents[$campaignid], $campaignid
+		);
 		$sql = sprintf(
 			'select sum(raws) as raws, sum(uniques) as uniques, sum(chargebacks) as chargebacks, sum(signups) as signups, sum(frauds) as frauds, sum(sales_number) as sales_number'
 			. ' from stats where '. $conditions . ' group by agentid, campaignid, siteid, typeid, convert(trxtime, date)'

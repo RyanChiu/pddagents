@@ -128,7 +128,7 @@ class TransController extends AppController {
 			'port'=>'25',
 			'timeout'=>'60',
 			'host' => 'smtpout.secureserver.net',
-			'username'=>'admin@PayDirtDollars.com',
+			'username'=>'admin@paydirtdollars.com',
 			'password'=>'Adutta11'
 		);
 		$this->Email->from = '<' . $from . '>';

@@ -466,8 +466,12 @@ echo $scripts_for_layout;
 					style="width: 180px;">
 					<?php
 					echo $html->link('<font><b>Update Cams-1</b></font>',
-							array('controller' => 'trans', 'action' => 'updtoolbox', 'site' => 1),
-							null, false, false
+						array('controller' => 'trans', 'action' => 'updtoolbox', 'site' => 1),
+						null, false, false
+					);
+					echo $html->link('<font><b>Update LC-Dating</b></font>',
+						array('controller' => 'trans', 'action' => 'updtoolbox', 'site' => 2),
+						null, false, false
 					);
 					?>
 				</div>
@@ -504,8 +508,12 @@ echo $scripts_for_layout;
 					style="width: 120px;">
 					<?php
 					echo $html->link('<font><b>Cams-1</b></font>',
-							array('controller' => 'trans', 'action' => 'toolbox', 'site' => 1),
-							null, false, false
+						array('controller' => 'trans', 'action' => 'toolbox', 'site' => 1),
+						null, false, false
+					);
+					echo $html->link('<font><b>LC-Dating</b></font>',
+						array('controller' => 'trans', 'action' => 'toolbox', 'site' => 2),
+						null, false, false
 					);
 					?>
 				</div>

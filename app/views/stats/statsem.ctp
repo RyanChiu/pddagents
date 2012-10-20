@@ -49,6 +49,7 @@ $userinfo = $session->read('Auth.Account');
 <br/>
 
 <?php
+$_show_pay_ = ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2, 3)));
 if (!empty($rs)) {
 ?>
 <table style="width:100%">
@@ -197,7 +198,7 @@ if (!empty($rs)) {
 		<?php echo $exPaginator->sort('Net', 'TmpStats.net'); ?>
 		</th>
 		<?php
-		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
+		if ($_show_pay_) {
 		?>
 		<th><?php echo $exPaginator->sort('Earnings', 'TmpStats.earnings'); ?></th>
 		<th><?php echo $exPaginator->sort('Payouts', 'TmpStats.payouts'); ?></th>
@@ -349,7 +350,7 @@ if (!empty($rs)) {
 		<td><?php echo $r['TmpStats']['sales_type1']; ?></td>
 		<td><?php echo $r['TmpStats']['net']; ?></td>
 		<?php
-		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
+		if ($_show_pay_) {
 		?>
 		<td><?php echo '$' . $r['TmpStats']['earnings']; ?></td>
 		<td><?php echo '$' . $r['TmpStats']['payouts']; ?></td>
@@ -400,7 +401,7 @@ if (!empty($rs)) {
 		<td class="totals"><?php echo $pagetotals['sales_type1']; ?></td>
 		<td class="totals"><?php echo $pagetotals['net']; ?></td>
 		<?php
-		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
+		if ($_show_pay_) {
 		?>
 		<td class="totals"><?php echo '$' . sprintf('%.2f', $pagetotals['earnings']); ?></td>
 		<td class="totals"><?php echo '$' . sprintf('%.2f', $pagetotals['payouts']); ?></td>
@@ -447,7 +448,7 @@ if (!empty($rs)) {
 		<td class="totals"><?php echo $totals['sales_type1']; ?></td>
 		<td class="totals"><?php echo $totals['net']; ?></td>
 		<?php
-		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
+		if ($_show_pay_) {
 		?>
 		<td class="totals"><?php echo '$' . $totals['earnings']; ?></td>
 		<td class="totals"><?php echo '$' . $totals['payouts']; ?></td>
@@ -503,7 +504,7 @@ if (!empty($rs)) {
 		<td class="totals"></td>
 		<td class="totals"></td>
 		<?php
-		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
+		if ($_show_pay_) {
 		?>
 		<td class="totals"></td>
 		<td class="totals"></td>
@@ -558,7 +559,7 @@ if (!empty($rs)) {
 		<td class="totals"></td>
 		<td class="totals"></td>
 		<?php
-		if ($userinfo['role'] == 0 && in_array($userinfo['id'], array(1, 2))) {
+		if ($_show_pay_) {
 		?>
 		<td class="totals"></td>
 		<td class="totals"></td>

@@ -85,7 +85,7 @@ while ($r_push = mysql_fetch_assoc($rs_push)) {
 				. ' values (%d, "%s", %d, %d, %d, %d, %d, %d, %d, %d, "%s")',
 				$agents[$campaignid], $campaignid, $siteid, $typeids[0],
 				//$item->uniques - $row['uniques'], $item->refunds - $row['chargebacks'], $item->frees - $row['signups'], null, $item->signups - $row['sales_number'],
-				$r_push['clicks'] - $row['raws'], $r_push['uniqueClicks'] - $row['uniques'], $r_push['chargeBacks'] - $row['chargebacks'], $r_push['signups'] - $row['signups'], null, $r_push['sales'] - $row['sales_number'],
+				$r_push['clicks'] - $row['raws'], $r_push['uniqueClicks'] - $row['uniques'], $r_push['refunds'] - $row['chargebacks'], $r_push['signups'] - $row['signups'], null, $r_push['sales'] - $row['sales_number'],
 				$date_l
 			);
 		} else {
@@ -95,7 +95,7 @@ while ($r_push = mysql_fetch_assoc($rs_push)) {
 				. ' values (%d, "%s", %d, %d, %d, %d, %d, %d, %d, %d, "%s")',
 				$agents[$campaignid], $campaignid, $siteid, $typeids[0],
 				//$item->uniques, $item->refunds, $item->frees, null, $item->signups,
-				$r_push['clicks'], $r_push['uniqueClicks'], $r_push['chargeBacks'], $r_push['signups'], null, $r_push['sales'],
+				$r_push['clicks'], $r_push['uniqueClicks'], $r_push['refunds'], $r_push['signups'], null, $r_push['sales'],
 				$date_l
 			);
 		}

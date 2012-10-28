@@ -192,26 +192,28 @@ class TransController extends AppController {
 		);
 		$i = 0;
 		foreach ($rs as $r) {
-			$topag = $this->Account->find('first',
+			$topac = $this->Account->find('first',
 				array(
 					'fields' => array('username'),
 					'conditions' => array('id' => $r['Stats']['agentid'])
 				)
 			);
-			$topcom = $this->Agent->find('first',
+			$topag = $this->Agent->find('first',
 				array(
-					'fields' => array('companyid'),
+					'fields' => array('companyid', 'ag1stname', 'aglastname'),
 					'conditions' => array('id' => $r['Stats']['agentid'])
 				)
 			);
 			$topcom = $this->Company->find('first',
 				array(
 					'fields' => array('officename'),
-					'conditions' => array('id' => $topcom['Agent']['companyid'])
+					'conditions' => array('id' => $topag['Agent']['companyid'])
 				)
 			);
 			$rs[$i]['ViewStats']['officename'] = $topcom['Company']['officename'];
-			$rs[$i]['ViewStats']['username'] = $topag['Account']['username'];
+			$rs[$i]['ViewStats']['username'] = $topac['Account']['username'];
+			$rs[$i]['ViewStats']['ag1stname'] = $topag['Agent']['ag1stname'];
+			$rs[$i]['ViewStats']['aglastname'] = $topag['Agent']['aglastname'];
 			$rs[$i]['ViewStats']['sales'] = $r[0]['sales'];
 			$i++;
 		}

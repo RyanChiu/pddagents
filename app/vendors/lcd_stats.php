@@ -77,12 +77,13 @@ $url = 'http://www.loadedcash.com/api.php?response_type=xml&json={"key":"' .
  * and we change and optimize the above 3 lines as the following block goes
  */
 $retimes = 0;
+$toptimes = 2;
 $response = file_get_contents($url);
 while ($response === false) {
 	$retimes++;
 	sleep(35);
 	$response = file_get_contents($url);
-	if ($retimes == 1) break;
+	if ($retimes == $toptimes) break;
 }
 if ($response === false) {
 	$mailinfo = 

@@ -152,8 +152,9 @@ if (!empty($notes)) {
 				</font>
 				<font style="font-size: 10pt;">(
 				<?php
-				$fullname = $r['ViewStats']['ag1stname'] . " " . $r['ViewStats']['aglastname'];
-				echo strlen($fullname) > 20 ? (substr($fullname, 0, 17) . "...") : $fullname;
+				//$showname = $r['ViewStats']['ag1stname'] . " " . $r['ViewStats']['aglastname'];
+				$showname = $r['ViewStats']['ag1stname'];
+				echo strlen($showname) > 20 ? (substr($showname, 0, 17) . "...") : $showname;
 				?>
 				)</font>
 			</td>
@@ -205,8 +206,9 @@ if (!empty($notes)) {
 				</font>
 				<font style="font-size: 10pt;">(
 				<?php
-				$fullname = $r['ViewStats']['ag1stname'] . " " . $r['ViewStats']['aglastname'];
-				echo strlen($fullname) > 20 ? (substr($fullname, 0, 17) . "...") : $fullname;
+				//$showname = $r['ViewStats']['ag1stname'] . " " . $r['ViewStats']['aglastname'];
+				$showname = $r['ViewStats']['ag1stname'];
+				echo strlen($showname) > 20 ? (substr($showname, 0, 17) . "...") : $showname;
 				?>
 				)</font>
 			</td>

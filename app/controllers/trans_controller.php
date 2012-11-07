@@ -706,7 +706,7 @@ class TransController extends AppController {
 				$this->data['FakeContactUs']['subject'],
 				"From:" . $this->data['FakeContactUs']['email'] . "\n\n" . $this->data['FakeContactUs']['message'],
 				"admin@PayDirtDollars.com",
-				"admin@PayDirtDollars.com",
+				"support@PayDirtDollars.com",
 				$this->data['FakeContactUs']['email']
 			);
 			$redirecturl = '';
@@ -915,6 +915,16 @@ class TransController extends AppController {
 						$exdone = true;
 					}
 					
+					/*send out an email to inform that a new agent created*/
+					$this->__sendemail(
+						"A new office '"
+						. $this->data['Account']['username']
+						. "' created, please check it out.",
+						"empty",
+						"admin@PayDirtDollars.com",
+						"newaccounts@PayDirtDollars.com"
+					);
+
 					/*redirect to some page*/
 					$this->Session->setFlash(
 						'Office "'
@@ -1081,7 +1091,7 @@ class TransController extends AppController {
 							. "' created, please check it out.",
 						"empty",
 						"admin@PayDirtDollars.com",
-						"admin@PayDirtDollars.com"
+						"newaccounts@PayDirtDollars.com"
 					);
 					/*redirect to some page*/ 
 					$this->Session->setFlash('Agent "' 

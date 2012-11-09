@@ -48,6 +48,7 @@ if (empty($agents)) {
 mysql_select_db("fwends_push", $zconn->dblink)
 	or die ("Something wrong with: " . mysql_error());
 $sql = sprintf("select * from tracking where statDate = '%s'", $date);
+$sql_fordebug = $sql; // for debug
 $rs_push = mysql_query($sql, $zconn->dblink)
 	or die ("Something wrong with: " . mysql_error() . "\n");
 
@@ -110,6 +111,7 @@ while ($r_push = mysql_fetch_assoc($rs_push)) {
 }
 if ($i == 0) {
 	echo "No stats data exist by now.\n";
+	echo $sql_fordebug . "(>>for debug<<)\n"; //for debug
 }
 echo $j . "(/" . $i . ") row(s) inserted.\n";
 echo "Just got the stats data from the remote server at '" . $date_l . "' on the remote server.\n";

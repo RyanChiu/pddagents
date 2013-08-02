@@ -26,6 +26,7 @@ class CanalController extends AppController {
 			$n = $_POST['ch'];
 		}
 		switch ($n) {
+			case -1:
 			case 0:
 			case 1:
 				$s = "from $n, accepted";

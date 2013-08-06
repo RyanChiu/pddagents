@@ -1,6 +1,4 @@
-<div style="margin-bottom:10px;border-top:0;border-left:0;border:right:0;border-bottom:solid blue 1px;width:100%;color:blue;">
 <?php echo $s; ?>
-</div>
 
 <?php
 $logpath = APP . "tmp" . DS . "canals.log";

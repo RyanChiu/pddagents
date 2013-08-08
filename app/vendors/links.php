@@ -26,5 +26,11 @@ while ($row = mysql_fetch_assoc($rs)) {
 	exec("php " . $path_parts["dirname"] . "/commdrv_links.php " . $fn . " " . $row["id"], $output);
 	echo implode("\n", $output) . "\n";
 	echo "--==import " . $fn . " end.==--(" . date('Y-m-d H:i:s') . ")\n";
+	$fn = $row['abbr'] . '_reg.php';
+	echo "--==execute " . $fn . " start.==--\n";
+	$output = array();
+	exec("php " . $path_parts["dirname"] . "/" . $fn . " needed", $output);
+	echo implode("\n", $output) . "\n";
+	echo "--==execute " . $fn . " end.==--\n";
 }
 ?>

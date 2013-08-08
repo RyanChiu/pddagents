@@ -41,6 +41,7 @@ while ($r = mysql_fetch_assoc($rs)) {
 	} else {
 		echo "[$agname]\n";
 	}
+	sleep(1);
 }
 
 // close cURL resource, and free up system resources

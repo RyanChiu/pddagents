@@ -42,7 +42,7 @@ class CanalController extends AppController {
 		/*actually save the data into stats*/
 		switch ($n) {
 			default:
-				if ($ip == "66.180.199.11" || $ip == "127.0.0.1") {
+				if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 					$type = trim($_GET['type']);
 					$type = strtolower($type);
 					$conn = new zmysqlConn();

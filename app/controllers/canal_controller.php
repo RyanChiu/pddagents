@@ -40,35 +40,32 @@ class CanalController extends AppController {
 				break;
 		}
 		/*actually save the data into stats*/
-		switch ($n) {
-			default:
-				if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
-					$type = trim($_GET['type']);
-					$type = strtolower($type);
-					$conn = new zmysqlConn();
-					$sql = "select a.*, b.id as 'typeid' from view_mappings a, types b where a.username = '" . $_GET['agent'] . "' and a.siteid = b.siteid and a.abbr = 'cams2'";
-					$rs = mysql_query($sql, $conn->dblink);
-					while ($r = mysql_fetch_assoc($rs)) {
-						$agid = $r['agentid'];
-						$typeid = $r['typeid'];
-						$siteid = $r['siteid'];
-						$campid = $r['campaignid'];
-						$clicks = ($type == 'click' ? 1 : 0);
-						$sales = ($type == 'sale' ? 1 : 0);
-						$trxtime = $now->format("Y-m-d H:i:s");
-						
-						$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
-							. " values ($agid, $clicks, 0, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
-						$sql = mysql_escape_string($sql);
-						//$err = $sql; continue; //for debug;
-						
-						if (mysql_query($sql, $conn->dblink) === false) {
-							$err = mysql_error();
-						}
-					}
+		if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
+			$type = trim($_GET['type']);
+			$type = strtolower($type);
+			$conn = new zmysqlConn();
+			$sql = "select a.*, b.id as 'typeid' from view_mappings a, types b where a.username = '" . $_GET['agent'] . "' and a.siteid = b.siteid and a.abbr = 'cams2'";
+			$rs = mysql_query($sql, $conn->dblink);
+			while ($r = mysql_fetch_assoc($rs)) {
+				$agid = $r['agentid'];
+				$typeid = $r['typeid'];
+				$siteid = $r['siteid'];
+				$campid = $r['campaignid'];
+				$clicks = ($type == 'click' ? 1 : 0);
+				$sales = ($type == 'sale' ? 1 : 0);
+				$trxtime = $now->format("Y-m-d H:i:s");
+				
+				$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
+					. " values ($agid, $clicks, 0, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
+				$sql = mysql_escape_string($sql);
+				//$err = $sql; continue; //for debug;
+				
+				if (mysql_query($sql, $conn->dblink) === false) {
+					$err = mysql_error();
 				}
-				break;
+			}
 		}
+				
 		$this->set(compact("s"));
 		$this->set(compact("n"));
 		$this->set(compact("ip"));

@@ -4,7 +4,7 @@
 $logpath = APP . "tmp" . DS . "canals.log";
 $from = "from canal $n: ";
 $stamp =  " [" . $ip . "/" . $now . "GMT]\n";
-if (empty($_POST)) {
+if (empty($_POST) && empty($_GET)) {
 	error_log(
 		$from . "Nothing posted here" . $stamp,
 		3, 
@@ -12,7 +12,9 @@ if (empty($_POST)) {
 	);
 } else {
 	error_log(
-		$from . "\n" . print_r($_POST, true) . $stamp,
+		$from . "\n" 
+			. "GET:\n" . print_r($_GET, true) . "\n"
+			. "POST:\n" . print_r($_POST, true) . $stamp,
 		3,
 		$logpath 
 	);

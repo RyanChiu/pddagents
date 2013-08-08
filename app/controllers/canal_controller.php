@@ -57,7 +57,6 @@ class CanalController extends AppController {
 				
 				$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
 					. " values ($agid, $clicks, 0, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
-				$sql = mysql_escape_string($sql);
 				//$err = $sql; continue; //for debug;
 				
 				if (mysql_query($sql, $conn->dblink) === false) {

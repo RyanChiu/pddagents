@@ -2,7 +2,7 @@
 
 <?php
 $logpath = APP . "tmp" . DS . "canals.log";
-$from = "from canal $n: ";
+$from = "from ip: $ip";
 $stamp =  " [" . $ip . "/" . $now . "GMT]\n";
 if (empty($_POST) && empty($_GET)) {
 	error_log(

@@ -21,28 +21,14 @@ class CanalController extends AppController {
 	function index() {
 		$this->layout = "emptylayout";
 		
-		$n = -1;
 		$ip = __getclientip();
-		if (isset($_GET['ch'])) {
-			$n = $_GET['ch'];
-		} else if (isset($_POST['ch'])) {
-			$n = $_POST['ch'];
-		}
 		$now = new DateTime("now", new DateTimeZone("GMT"));
 		$err = "";
-		/*log it all*/
-		switch ($n) {
-			case -1:
-			case 0:
-			case 1:
-				$s = "from $n, accepted";
-				break;
-			default:
-				$s = "illegal visit";
-				break;
-		}
+		$s = "";
 		/*actually save the data into stats*/
 		if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
+			$s = "from ip: $ip, accepted";
+			
 			$type = (isset($_GET['type']) ? trim($_GET['type']) : (isset($_POST['type']) ? trim($_POST['type']) : 'ill')); 
 			$type = strtolower($type);
 			$agent = (isset($_GET['agent']) ? trim($_GET['agent']) : (isset($_POST['agent']) ? trim($_POST['agent']) : '')); 
@@ -75,10 +61,11 @@ class CanalController extends AppController {
 				}
 				$i++;
 			}
+		} else {
+			$s = "illegal visit";
 		}
 				
 		$this->set(compact("s"));
-		$this->set(compact("n"));
 		$this->set(compact("ip"));
 		$this->set("now", $now->format("Y-m-d H:i:s"));
 		$this->set(compact("err"));

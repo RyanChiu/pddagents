@@ -48,26 +48,32 @@ class CanalController extends AppController {
 			$agent = (isset($_GET['agent']) ? trim($_GET['agent']) : (isset($_POST['agent']) ? trim($_POST['agent']) : '')); 
 			$unique = (isset($_GET['unique']) ? trim($_GET['unique']) : (isset($_POST['unique']) ? trim($_POST['unique']) : ''));
 			$unique = strtolower($unique);
+			$ch = (isset($_GET['ch']) ? trim($_GET['ch']) : (isset($_POST['ch']) ? trim($_POST['ch']) : ''));
+			$ch = intval($ch);
 			$conn = new zmysqlConn();
-			$sql = "select a.*, b.id as 'typeid' from view_mappings a, types b where a.username = '$agent' and a.siteid = b.siteid and a.abbr = 'cams2'";
+			$sql = "select a.*, b.id as 'typeid' from view_mappings a, types b where a.username = '$agent' and a.siteid = b.siteid and a.abbr = 'cams2' ORDER BY typeid";
 			$rs = mysql_query($sql, $conn->dblink);
+			$i = 0;
 			while ($r = mysql_fetch_assoc($rs)) {
-				$agid = $r['agentid'];
-				$typeid = $r['typeid'];
-				$siteid = $r['siteid'];
-				$campid = $r['campaignid'];
-				$clicks = ($type == 'click' ? 1 : 0);
-				$uniques = ($unique == 'y' ? 1 : 0);
-				$sales = ($type == 'sale' ? 1 : 0);
-				$trxtime = $now->format("Y-m-d H:i:s");
-				
-				$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
-					. " values ($agid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
-				//$err = $sql; continue; //for debug;
-				
-				if (mysql_query($sql, $conn->dblink) === false) {
-					$err = mysql_error();
+				if ($i == $ch) {
+					$typeid = $r['typeid'];
+					$agid = $r['agentid'];
+					$siteid = $r['siteid'];
+					$campid = $r['campaignid'];
+					$clicks = ($type == 'click' ? 1 : 0);
+					$uniques = ($unique == 'y' ? 1 : 0);
+					$sales = ($type == 'sale' ? 1 : 0);
+					$trxtime = $now->format("Y-m-d H:i:s");
+					
+					$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
+						. " values ($agid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
+					//$err = $sql; continue; //for debug;
+					
+					if (mysql_query($sql, $conn->dblink) === false) {
+						$err = mysql_error();
+					}
 				}
+				$i++;
 			}
 		}
 				

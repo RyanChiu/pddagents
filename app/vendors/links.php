@@ -19,6 +19,13 @@ $rs = mysql_query($sql, $zconn->dblink)
 */
 $path_parts = pathinfo($argv[0]);
 while ($row = mysql_fetch_assoc($rs)) {
+	$fn = $row['abbr'] . '_reg.php';
+	echo "--==execute " . $fn . " start.==--\n";
+	$output = array();
+	exec("php " . $path_parts["dirname"] . "/" . $fn . " needed", $output);
+	echo implode("\n", $output) . "\n";
+	echo "--==execute " . $fn . " end.==--\n";
+	
 	$fn = $row['abbr'] . '_campaigns.txt';
 	echo "--==import " . $fn . " start.==--\n";
 	$output = array();
@@ -26,11 +33,5 @@ while ($row = mysql_fetch_assoc($rs)) {
 	exec("php " . $path_parts["dirname"] . "/commdrv_links.php " . $fn . " " . $row["id"], $output);
 	echo implode("\n", $output) . "\n";
 	echo "--==import " . $fn . " end.==--(" . date('Y-m-d H:i:s') . ")\n";
-	$fn = $row['abbr'] . '_reg.php';
-	echo "--==execute " . $fn . " start.==--\n";
-	$output = array();
-	exec("php " . $path_parts["dirname"] . "/" . $fn . " needed", $output);
-	echo implode("\n", $output) . "\n";
-	echo "--==execute " . $fn . " end.==--\n";
 }
 ?>

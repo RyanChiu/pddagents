@@ -172,25 +172,25 @@ if (!empty($rs)) {
 		?>
 		<th <?php echo count($typesv) > 4 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sales', 'TmpStats.sales_type4')
+		echo $exPaginator->sort('Sale', 'TmpStats.sales_type4')
 			. '<br/><i>' . (count($typesv) > 4 ? $typesv[4] : 'N/A') . '</i>';
 		?>
 		</th>
 		<th <?php echo count($typesv) > 3 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sales', 'TmpStats.sales_type3')
+		echo $exPaginator->sort('Sale', 'TmpStats.sales_type3')
 			. '<br/><i>' . (count($typesv) > 3 ? $typesv[3] : 'N/A') . '</i>';
 		?>
 		</th>
 		<th <?php echo count($typesv) > 2 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sales', 'TmpStats.sales_type2')
+		echo $exPaginator->sort('Sale', 'TmpStats.sales_type2')
 			. '<br/><i>' . (count($typesv) > 2 ? $typesv[2] : 'N/A') . '</i>';
 		?>
 		</th>
 		<th <?php echo count($typesv) > 1 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sales', 'TmpStats.sales_type1')
+		echo $exPaginator->sort('Sale', 'TmpStats.sales_type1')
 			. '<br/><i>' . (count($typesv) > 1 ? $typesv[1] : 'N/A') . '</i>';
 		?>
 		</th>

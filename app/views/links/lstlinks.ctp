@@ -86,12 +86,26 @@ if (!empty($rs)) {
 		</tr>
 	<?php
 		} else if (array_key_exists('AgentSiteMapping', $r)) {
+			$i = 0;
 			foreach ($types as $type) {
 	?>
 		<tr>
 			<td align="center">
 			<?php
-			echo $sites[$r['AgentSiteMapping']['siteid']] . '_' . $type['Type']['typename'] . ':&nbsp;&nbsp;&nbsp;';
+			/*
+			 * HARD CODE HERE, IN ORDER TO SHOW SOME SPECIAL INFO FOR CAMS2
+			 */
+			$typealias = "";
+			if ($r['AgentSiteMapping']['siteid'] == 7) {
+				if ($i == 0) {
+					$typealias = "(Straight)";
+				} else if ($i == 1) {
+					$typealias = "(Gay)";
+				}
+			}
+			
+			echo $sites[$r['AgentSiteMapping']['siteid']] . '_' . $type['Type']['typename'] 
+				. $typealias . ':&nbsp;&nbsp;&nbsp;';
 			echo '<b>';
 			echo $html->url(array('controller' => 'trans', 'action' => 'go'), true) . '/'
 				. $r['AgentSiteMapping']['siteid'] . '/'
@@ -102,6 +116,7 @@ if (!empty($rs)) {
 			</td>
 		</tr>
 	<?php
+			$i++;
 			}
 		}
 	endforeach;

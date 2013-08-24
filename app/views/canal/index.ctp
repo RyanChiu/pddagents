@@ -3,7 +3,7 @@
 <?php
 $logpath = APP . "tmp" . DS . "canals.log";
 $from = "from ip: $ip";
-$stamp =  " [" . $ip . "/" . $now . "GMT]\n";
+$stamp =  " [" . $ip . "/" . $now . "($tz)]\n";
 if (empty($_POST) && empty($_GET)) {
 	error_log(
 		$from . "Nothing posted here" . $stamp,

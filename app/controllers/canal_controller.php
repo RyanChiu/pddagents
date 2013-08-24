@@ -22,7 +22,8 @@ class CanalController extends AppController {
 		$this->layout = "emptylayout";
 		
 		$ip = __getclientip();
-		$now = new DateTime("now", new DateTimeZone("GMT"));
+		$tz = "EST";
+		$now = new DateTime("now", new DateTimeZone($tz));
 		$err = "";
 		$s = "";
 		/*actually save the data into stats*/
@@ -67,6 +68,7 @@ class CanalController extends AppController {
 				
 		$this->set(compact("s"));
 		$this->set(compact("ip"));
+		$this->set(compact("tz"));
 		$this->set("now", $now->format("Y-m-d H:i:s"));
 		$this->set(compact("err"));
 	}

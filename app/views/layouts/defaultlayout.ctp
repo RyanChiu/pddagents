@@ -586,10 +586,10 @@ echo $scripts_for_layout;
 						<script language="javascript">
 			        	function __zShowClock() {
 			        		var now = new Date();
-				        	now.setHours(now.getHours() + 0);
+				        	now.setHours(now.getHours() - 4);
 				        	var nowStr = now.toUTCString();
-				        	nowStr = nowStr.replace("GMT", "GMT"); //for firefox browser
-				        	nowStr = nowStr.replace("UTC", "GMT"); //for IE browser
+				        	nowStr = nowStr.replace("GMT", "EDT"); //for firefox browser
+				        	nowStr = nowStr.replace("UTC", "EDT"); //for IE browser
 			        		jQuery("#iptClock").val(nowStr);
 			        		setTimeout("__zShowClock()", 1000);
 			        	}

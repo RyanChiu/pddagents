@@ -25,7 +25,7 @@ class TransController extends AppController {
 	);
 	var $__limit = 50;
 	//var $__svrtz = "Asia/Manila";
-	var $__svrtz = "GMT";
+	var $__svrtz = "EST5EDT";
 	var $__timeout = 21600;// in seconds, shoud be the same with the php timeout setting
 
 	function beforeFilter() {

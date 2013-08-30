@@ -30,6 +30,8 @@ class CanalController extends AppController {
 		if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 			$s = "from ip: $ip, accepted";
 			
+			$stamp = (isset($_GET['stamp']) ? trim($_GET['stamp']) : (isset($_POST['stamp']) ? trim($_POST['stamp']) : ''));
+			$stamp = strtolower($stamp);
 			$type = (isset($_GET['type']) ? trim($_GET['type']) : (isset($_POST['type']) ? trim($_POST['type']) : 'ill')); 
 			$type = strtolower($type);
 			$agent = (isset($_GET['agent']) ? trim($_GET['agent']) : (isset($_POST['agent']) ? trim($_POST['agent']) : '')); 
@@ -51,6 +53,18 @@ class CanalController extends AppController {
 					$uniques = ($unique == 'y' ? 1 : 0);
 					$sales = ($type == 'sale' ? 1 : 0);
 					$trxtime = $now->format("Y-m-d H:i:s");
+					if ($type == 'sale') {
+						if (!empty($stamp)) {
+							$trxtime = substr($stamp, 0, 4) . "-"
+								. substr($stamp, 4, 2) . "-"
+								. substr($stamp, 6, 2) . " "
+								. substr($stamp, 9, 2) . ":"
+								. substr($stamp, 11, 2) . ":"
+								. substr($stamp, 13, 2);
+						} else {
+							$trxtime = "0000-00-00 00:00";
+						}
+					}
 					
 					$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
 						. " values ($agid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";

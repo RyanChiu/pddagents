@@ -55,20 +55,20 @@ class CanalController extends AppController {
 					$trxtime = $now->format("Y-m-d H:i:s");
 					if ($type == 'sale') {
 						if (!empty($stamp)) {
-							$trxtime = substr($stamp, 0, 4) . "-"
-								. substr($stamp, 4, 2) . "-"
-								. substr($stamp, 6, 2) . " "
-								. substr($stamp, 9, 2) . ":"
-								. substr($stamp, 11, 2) . ":"
-								. substr($stamp, 13, 2);
+							$ts = DateTime::createFromFormat("Ymd_His00", $stamp);
+							if ($ts !== false) {
+								$trxtime = $ts->format("Y-m-d H:i:s");
+							} else {
+								$trxtime = $now->format("Y-m-d 00:00:01");
+							}
 						} else {
-							$trxtime = "0000-00-00 00:00";
+							$trxtime = $now->format("Y-m-d 00:00:02");
 						}
 					}
 					
 					$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
 						. " values ($agid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
-					//$err = $sql; continue; //for debug;
+					//$err = $sql; $s .= $err; continue; //for debug;
 					
 					if (mysql_query($sql, $conn->dblink) === false) {
 						$err = mysql_error();

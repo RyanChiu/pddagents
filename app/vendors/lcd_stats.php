@@ -152,7 +152,7 @@ foreach ($xml->children() as $item) {
 			or die ("Something wrong with: " . mysql_error());
 		if (mysql_num_rows($result) != 0) {
 			if (mysql_num_rows($result) != 1) {
-				exit("It should be only 1 row data by day.\n");
+				echo ("It should be only 1 row data by day.(" . mysql_num_rows($result) . ")\n");
 			}
 			$row = mysql_fetch_assoc($result);
 			$frauds = empty($row['frauds']) ? 0 : $row['frauds'];
@@ -161,7 +161,11 @@ foreach ($xml->children() as $item) {
 		$sql = 'delete from stats where ' . $conditions;
 		mysql_query($sql, $zconn->dblink)
 			or die ("Something wrong with: " . mysql_error());
+		$_m = $m;
 		$m += mysql_affected_rows();
+		if (($m - $_m) != 1) {
+			echo (($m - $_m) . " row(s) deleted!\n");
+		}
 		
 		$sql = sprintf(
 			'insert into stats'
@@ -174,7 +178,11 @@ foreach ($xml->children() as $item) {
 		//echo $sql . "\n"; continue;//for debug
 		mysql_query($sql, $zconn->dblink)
 			or die ("Something wrong with: " . mysql_error());
+		$_j = $j;
 		$j += mysql_affected_rows();
+		if (($j - $_j) != 1) {
+			echo (($j - $_j) . " row(s) inserted!\n");
+		}
 		$i++;
 	}
 }

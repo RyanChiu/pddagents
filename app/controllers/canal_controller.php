@@ -24,6 +24,31 @@ class CanalController extends AppController {
 		$ip = __getclientip();
 		$tz = "EST";
 		$now = new DateTime("now", new DateTimeZone($tz));
+		$now = $now->format("Y-m-d H:i:s");
+		
+		/*
+		 * just log every POST/GET at the very beginning
+		 */
+		$logpath = APP . "tmp" . DS . "canals.log";
+		$from = "from ip: $ip";
+		$ending =  " [" . $ip . "/" . $now . "($tz)]\n";
+		error_log("######\n", 3, $logpath);
+		if (empty($_POST) && empty($_GET)) {
+			error_log(
+				$from . "Nothing posted here" . $ending,
+				3,
+				$logpath
+			);
+		} else {
+			error_log(
+				$from . "\n"
+					. "GET:\n" . print_r($_GET, true) . "\n"
+					. "POST:\n" . print_r($_POST, true) . $ending,
+				3,
+				$logpath
+			);
+		}
+		
 		$err = "";
 		$s = "";
 		/*actually save the data into stats*/
@@ -79,12 +104,22 @@ class CanalController extends AppController {
 		} else {
 			$s = "illegal visit";
 		}
+		
+		/*
+		 * log sql err if needed
+		 */
+		if (!empty($err)) {
+			$time = str_replace(" ", "", $now);
+			$time = str_replace("-", "", $time);
+			$time = str_replace(":", "", $time);
+			error_log(
+				$from . "\n" . $err . $ending,
+				3,
+				APP . "tmp" . DS . "err_" . $time . ".log"
+			);
+		}
 				
 		$this->set(compact("s"));
-		$this->set(compact("ip"));
-		$this->set(compact("tz"));
-		$this->set("now", $now->format("Y-m-d H:i:s"));
-		$this->set(compact("err"));
 	}
 }
 	

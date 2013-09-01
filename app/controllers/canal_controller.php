@@ -24,14 +24,13 @@ class CanalController extends AppController {
 		$ip = __getclientip();
 		$tz = "EST";
 		$now = new DateTime("now", new DateTimeZone($tz));
-		$now = $now->format("Y-m-d H:i:s");
 		
 		/*
 		 * just log every POST/GET at the very beginning
 		 */
 		$logpath = APP . "tmp" . DS . "canals.log";
 		$from = "from ip: $ip";
-		$ending =  " [" . $ip . "/" . $now . "($tz)]\n";
+		$ending =  " [" . $ip . "/" . $now->format("Y-m-d H:i:s") . "($tz)]\n";
 		error_log("######\n", 3, $logpath);
 		if (empty($_POST) && empty($_GET)) {
 			error_log(
@@ -109,6 +108,7 @@ class CanalController extends AppController {
 		 * log sql err if needed
 		 */
 		if (!empty($err)) {
+			$now = $now->format("Y-m-d H:i:s");
 			$time = str_replace(" ", "", $now);
 			$time = str_replace("-", "", $time);
 			$time = str_replace(":", "", $time);

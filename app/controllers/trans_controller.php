@@ -352,7 +352,7 @@ class TransController extends AppController {
 		//avoid those data which are not in types
 		$conds['startdate'] = '0000-00-00';
 		$conds['enddate'] = date('Y-m-d');
-		$rs = $this->__top10($conds);
+		$rs = array(); ///*disable all top 10 for the moment*/$this->__top10($conds);
 		$this->set(compact('rs'));
 		$weekend = date("Y-m-d", strtotime(date('Y-m-d') . " Saturday"));
 		$weekstart = date("Y-m-d", strtotime($weekend . " - 6 days"));

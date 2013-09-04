@@ -1,4 +1,4 @@
-<h1>Update ALERTS</h1>
+<h1>Add News</h1>
 <?php
 //echo print_r($results, true);
 $userinfo = $session->read('Auth.Account');

@@ -45,7 +45,11 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 	$ch = (isset($_GET['ch']) ? trim($_GET['ch']) : (isset($_POST['ch']) ? trim($_POST['ch']) : ''));
 	$ch = intval($ch);
 	$conn = new zmysqlConn();
-	$sql = "select a.*, b.id as 'typeid' from view_mappings a, types b where a.username = '$agent' and a.siteid = b.siteid and a.abbr = 'cams2' ORDER BY typeid";
+	$sql = "select a.*, b.id as 'typeid' 
+			from agent_site_mappings a, sites s, accounts n, types b 
+			where a.siteid = s.id and a.siteid = b.siteid and s.abbr = 'cams2' 
+				and a.agentid = n.id and n.username = 'TEST01'
+			ORDER BY typeid";
 	$rs = mysql_query($sql, $conn->dblink);
 	$i = 0;
 	while ($r = mysql_fetch_assoc($rs)) {
@@ -100,5 +104,5 @@ if (!empty($err)) {
 	);
 }
 
-echo $s;
+echo $s . "\n";
 ?>

@@ -46,10 +46,10 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 	$ch = intval($ch);
 	$conn = new zmysqlConn();
 	$sql = "select a.*, b.id as 'typeid' 
-			from agent_site_mappings a, sites s, accounts n, types b 
-			where a.siteid = s.id and a.siteid = b.siteid and s.abbr = 'cams2' 
-				and a.agentid = n.id and n.username = '$agent'
-			ORDER BY typeid";
+		from agent_site_mappings a, sites s, accounts n, types b 
+		where a.siteid = s.id and a.siteid = b.siteid and s.abbr = 'cams2' 
+			and a.agentid = n.id and n.username = '$agent'
+		ORDER BY typeid";
 	$rs = mysql_query($sql, $conn->dblink);
 	$i = 0;
 	while ($r = mysql_fetch_assoc($rs)) {

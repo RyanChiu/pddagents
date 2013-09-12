@@ -4,6 +4,7 @@
  */
 
 include 'zmysqlConn.class.php';
+include 'extrakits.inc.php';
 
 const ONLYIP = "66.180.199.11";
 if ($argc != 3) 
@@ -14,10 +15,15 @@ $search = ONLYIP . "/" . $day;
 
 $count = substr_count($fstr, $search);
 
+$conn = new zmysqlConn();
+/*get the abbreviation of the site*/
+$abbr = __stats_get_abbr($argv[0]);
+__stats_get_types_site($typeids, $siteid, $abbr, $conn->dblink);
+
 $i = 0;
 $start = 0;
 $posts = array();
-do {
+while ($i < $count) {
 	$pos = strpos($fstr, $search, $start);
 	
 	$p1 = strripos($fstr, '[type]', $pos - strlen($fstr));
@@ -76,7 +82,7 @@ do {
 	
 	$start = $pos + strlen($search);
 	$i++;
-} while ($i < $count);
+}
 
 /*
 $in = "";
@@ -89,8 +95,7 @@ exit();
 */
 
 $k = 0;
-$conn = new zmysqlConn();
-$sql = "delete from stats where convert(trxtime, date) = '$day'";
+$sql = "delete from stats where convert(trxtime, date) = '$day' and siteid = $siteid";
 mysql_query($sql, $conn->dblink);
 echo sprintf("%d(/$count) removed.\n", mysql_affected_rows());
 
@@ -101,11 +106,12 @@ for ($j = 0; $j < count($posts); $j++) {
 	$unique = $posts[$j]['unique'];
 	$trxtime = $posts[$j]['trxtime'];
 	
-	$sql = "select a.*, b.id as 'typeid'
-		from agent_site_mappings a, sites s, accounts n, types b
-		where a.siteid = s.id and a.siteid = b.siteid and s.abbr = 'cams2'
-		and a.agentid = n.id and n.username = '$agent'
-		ORDER BY typeid";
+	$sql = "select a.*, b.id as 'typeid'" .
+		" from agent_site_mappings a, sites s, accounts n, types b" .
+		" where a.siteid = s.id and a.siteid = b.siteid and s.abbr = 'cams2'" .
+		" and a.agentid = n.id and n.username = '$agent'" .
+		" ORDER BY typeid";
+	//echo "($sql)" . "\n";continue;//for debug
 	$rs = mysql_query($sql, $conn->dblink);
 	if (mysql_affected_rows() == 0) echo "\n-$agent-";
 	$i = 0;

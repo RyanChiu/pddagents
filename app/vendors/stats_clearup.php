@@ -35,8 +35,8 @@ $datecond = sprintf(" where convert(runtime, date) >= '%s' and convert(runtime, 
 	$startdate, $enddate
 );
 $sql = sprintf(
-	"delete from tmp_stats"
-	. " where runid in"
+	"delete from t_stats"
+	. " where run_id in"
 	. " (select id from run_stats"
 	. $datecond . ")"
 );

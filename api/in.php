@@ -45,9 +45,10 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 	$ch = (isset($_GET['ch']) ? trim($_GET['ch']) : (isset($_POST['ch']) ? trim($_POST['ch']) : ''));
 	$ch = intval($ch);
 	$conn = new zmysqlConn();
-	$sql = "select a.*, b.id as 'typeid' 
-		from agent_site_mappings a, sites s, accounts n, types b 
+	$sql = "select a.*, g.companyid, b.id as 'typeid' 
+		from agent_site_mappings a, sites s, accounts n, types b, agents g, companies m 
 		where a.siteid = s.id and a.siteid = b.siteid and s.abbr = 'cams2' 
+			and a.agentid = g.id and g.companyid = m.id
 			and a.agentid = n.id and n.username = '$agent'
 		ORDER BY typeid";
 	$rs = mysql_query($sql, $conn->dblink);
@@ -56,6 +57,7 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 		if ($i == $ch) {
 			$typeid = $r['typeid'];
 			$agid = $r['agentid'];
+			$comid = $r['companyid'];
 			$siteid = $r['siteid'];
 			$campid = $r['campaignid'];
 			$clicks = ($type == 'click' ? 1 : 0);
@@ -75,9 +77,9 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 				}
 			}
 
-			$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
-			. " values ($agid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
-			//$err = $sql; $s .= $err; continue; //for debug;
+			$sql = "insert into stats (agentid, companyid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
+			. " values ($agid, $comid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
+			//echo "$sql($i/$ch)\n"; continue; //for debug;
 
 			if (mysql_query($sql, $conn->dblink) === false) {
 				$err = mysql_error();

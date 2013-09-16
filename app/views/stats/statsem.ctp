@@ -119,49 +119,49 @@ if (!empty($rs)) {
 		<?php
 		switch ($bywhat) {
 			case 0:
-				echo '<th>' . $exPaginator->sort('Date', 'TmpStats.trxtime') . '</th>';
+				echo '<th>' . $exPaginator->sort('Date', 'ViewTStats.trxtime') . '</th>';
 				break;
 			case 1:
-				echo '<th>' . $exPaginator->sort('Office Name', 'TmpStats.officename') . '</th>';
+				echo '<th>' . $exPaginator->sort('Office Name', 'ViewTStats.officename') . '</th>';
 				break;
 			case 2:
-				echo '<th>' . $exPaginator->sort('Agent', 'TmpStats.username4m') . '</th>';
-				echo '<th>' . $exPaginator->sort('Office Name', 'TmpStats.officename') . '</th>';
+				echo '<th>' . $exPaginator->sort('Agent', 'ViewTStats.username4m') . '</th>';
+				echo '<th>' . $exPaginator->sort('Office Name', 'ViewTStats.officename') . '</th>';
 				break;
 			case 3:
-				echo '<th>' . $exPaginator->sort('Date', 'TmpStats.trxtime') . '</th>';
-				echo '<th>' . $exPaginator->sort('Office Name', 'TmpStats.officename') . '</th>';
-				echo '<th>' . $exPaginator->sort('Agent', 'TmpStats.username4m') . '</th>';
+				echo '<th>' . $exPaginator->sort('Date', 'ViewTStats.trxtime') . '</th>';
+				echo '<th>' . $exPaginator->sort('Office Name', 'ViewTStats.officename') . '</th>';
+				echo '<th>' . $exPaginator->sort('Agent', 'ViewTStats.username4m') . '</th>';
 				break;
 			default:
 				echo '<th></th>';
 				break;
 		}
 		?>	
-		<th><?php echo $exPaginator->sort('Raws', 'TmpStats.raws'); ?></th>
+		<th><?php echo $exPaginator->sort('Raws', 'ViewTStats.raws'); ?></th>
 		<th <?php echo !in_array($selsite, array(-1, -2)) ? '' : 'class="naClassHide"'; ?>>
-		<?php echo $exPaginator->sort('Uniques', 'TmpStats.uniques'); ?>
+		<?php echo $exPaginator->sort('Uniques', 'ViewTStats.uniques'); ?>
 		</th>
 		<!--
 		<th <?php //echo !in_array($selsite, array(6, 7, 8)) ? '' : 'class="naClassHide"'; ?>>
-		<?php //echo $exPaginator->sort('Fraud', 'TmpStats.chargebacks'); ?>
+		<?php //echo $exPaginator->sort('Fraud', 'ViewTStats.chargebacks'); ?>
 		</th>
 		-->
 		<th <?php echo $selsite != -1 ? '' : 'class="naClassHide"'; ?>>
-		<?php echo $exPaginator->sort('Free*', 'TmpStats.signups'); ?>
+		<?php echo $exPaginator->sort('Free*', 'ViewTStats.signups'); ?>
 		</th>
 		<th <?php echo $userinfo['role'] == 0 ? 'class="naClassHide"' : 'class="naClassHide"'; ?>>
-		<?php //echo $exPaginator->sort('Frauds', 'TmpStats.frauds'); ?>
+		<?php //echo $exPaginator->sort('Frauds', 'ViewTStats.frauds'); ?>
 		<?php
 			echo '<font size="1">'; 
-			echo $exPaginator->sort('Frauds', 'TmpStats.frauds');
+			echo $exPaginator->sort('Frauds', 'ViewTStats.frauds');
 			echo '</font>';
 			echo '<br/><font size="1">(for revise)</font>';
 		?>
 		</th>
 		<th <?php echo $userinfo['role'] != -1 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-			echo $exPaginator->sort('Frauds', 'TmpStats.chargebacks');
+			echo $exPaginator->sort('Frauds', 'ViewTStats.chargebacks');
 		?>
 		</th>
 		<?php
@@ -172,36 +172,36 @@ if (!empty($rs)) {
 		?>
 		<th <?php echo count($typesv) > 4 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sale', 'TmpStats.sales_type4')
+		echo $exPaginator->sort('Sale', 'ViewTStats.sales_type4')
 			. '<br/><i>' . (count($typesv) > 4 ? $typesv[4] : 'N/A') . '</i>';
 		?>
 		</th>
 		<th <?php echo count($typesv) > 3 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sale', 'TmpStats.sales_type3')
+		echo $exPaginator->sort('Sale', 'ViewTStats.sales_type3')
 			. '<br/><i>' . (count($typesv) > 3 ? $typesv[3] : 'N/A') . '</i>';
 		?>
 		</th>
 		<th <?php echo count($typesv) > 2 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sale', 'TmpStats.sales_type2')
+		echo $exPaginator->sort('Sale', 'ViewTStats.sales_type2')
 			. '<br/><i>' . (count($typesv) > 2 ? $typesv[2] : 'N/A') . '</i>';
 		?>
 		</th>
 		<th <?php echo count($typesv) > 1 ? '' : 'class="naClassHide"'; ?>>
 		<?php
-		echo $exPaginator->sort('Sale', 'TmpStats.sales_type1')
+		echo $exPaginator->sort('Sale', 'ViewTStats.sales_type1')
 			. '<br/><i>' . (count($typesv) > 1 ? $typesv[1] : 'N/A') . '</i>';
 		?>
 		</th>
 		<th <?php echo in_array($selsite, array(-1, -2)) ? 'class="naClassHide"' : ''; // just do not show for the some site?>>
-		<?php echo $exPaginator->sort('Net', 'TmpStats.net'); ?>
+		<?php echo $exPaginator->sort('Net', 'ViewTStats.net'); ?>
 		</th>
 		<?php
 		if ($_show_pay_) {
 		?>
-		<th><?php echo $exPaginator->sort('Earnings', 'TmpStats.earnings'); ?></th>
-		<th><?php echo $exPaginator->sort('Payouts', 'TmpStats.payouts'); ?></th>
+		<th><?php echo $exPaginator->sort('Earnings', 'ViewTStats.earnings'); ?></th>
+		<th><?php echo $exPaginator->sort('Payouts', 'ViewTStats.payouts'); ?></th>
 		<?php
 		} else if ($userinfo['role'] == -1) {
 		?>
@@ -219,18 +219,18 @@ if (!empty($rs)) {
 	);
 	$i = 0;
 	foreach ($rs as $r) {
-		$pagetotals['raws'] += $r['TmpStats']['raws'];
-		$pagetotals['uniques'] += $r['TmpStats']['uniques'];
-		$pagetotals['chargebacks'] += $r['TmpStats']['chargebacks'];
-		$pagetotals['signups'] += $r['TmpStats']['signups'];
-		$pagetotals['frauds'] += $r['TmpStats']['frauds'];
-		$pagetotals['sales_type1'] += $r['TmpStats']['sales_type1'];
-		$pagetotals['sales_type2'] += $r['TmpStats']['sales_type2'];
-		$pagetotals['sales_type3'] += $r['TmpStats']['sales_type3'];
-		$pagetotals['sales_type4'] += $r['TmpStats']['sales_type4'];
-		$pagetotals['net'] += $r['TmpStats']['net'];
-		$pagetotals['payouts'] += $r['TmpStats']['payouts'];
-		$pagetotals['earnings'] += $r['TmpStats']['earnings'];
+		$pagetotals['raws'] += $r['ViewTStats']['raws'];
+		$pagetotals['uniques'] += $r['ViewTStats']['uniques'];
+		$pagetotals['chargebacks'] += $r['ViewTStats']['chargebacks'];
+		$pagetotals['signups'] += $r['ViewTStats']['signups'];
+		$pagetotals['frauds'] += $r['ViewTStats']['frauds'];
+		$pagetotals['sales_type1'] += $r['ViewTStats']['sales_type1'];
+		$pagetotals['sales_type2'] += $r['ViewTStats']['sales_type2'];
+		$pagetotals['sales_type3'] += $r['ViewTStats']['sales_type3'];
+		$pagetotals['sales_type4'] += $r['ViewTStats']['sales_type4'];
+		$pagetotals['net'] += $r['ViewTStats']['net'];
+		$pagetotals['payouts'] += $r['ViewTStats']['payouts'];
+		$pagetotals['earnings'] += $r['ViewTStats']['earnings'];
 	?>
 	<tr<?php echo ($i % 2 == 0 ? '' : ' class="odd"'); ?>>
 		<?php
@@ -238,10 +238,10 @@ if (!empty($rs)) {
 			case 0:
 				echo '<td>'
 					. $html->link(
-							substr($r['TmpStats']['trxtime'], 0, 10),
+							substr($r['ViewTStats']['trxtime'], 0, 10),
 							array('controller' => 'stats', 'action' => 'statscompany',
-								'startdate' => substr($r['TmpStats']['trxtime'], 0, 10),
-								'enddate' => substr($r['TmpStats']['trxtime'], 0, 10),
+								'startdate' => substr($r['ViewTStats']['trxtime'], 0, 10),
+								'enddate' => substr($r['ViewTStats']['trxtime'], 0, 10),
 								'siteid' => $selsite,
 								'typeid' => $seltype,
 								'companyid' => empty($selcoms) ? implode(',', array_keys($coms)) : implode(',', $selcoms),
@@ -253,13 +253,13 @@ if (!empty($rs)) {
 			case 1:
 				echo '<td>'
 					. $html->link(
-						$r['TmpStats']['officename'],
+						$r['ViewTStats']['officename'],
 						array('controller' => 'stats', 'action' => 'statsagent',
 							'startdate' => $startdate,
 							'enddate' => $enddate,
 							'siteid' => $selsite,
 							'typeid' => $seltype,
-							'companyid' => $r['TmpStats']['companyid'],
+							'companyid' => $r['ViewTStats']['companyid'],
 							'agentid' => $selagent
 						)
 					)
@@ -268,41 +268,41 @@ if (!empty($rs)) {
 			case 2:
 				echo '<td>'
 					/*
-					. $r['TmpStats']['username']
+					. $r['ViewTStats']['username']
 					*/
 					. $html->link(
-						$r['TmpStats']['username'],
+						$r['ViewTStats']['username'],
 						array('controller' => 'stats', 'action' => 'statsagdetail',
 							'startdate' => $startdate,
 							'enddate' => $enddate,
 							'siteid' => $selsite,
 							'typeid' => $seltype,
 							'companyid' => empty($selcoms) ? implode(',', array_keys($coms)) : implode(',', $selcoms),
-							'agentid' => $r['TmpStats']['agentid']
+							'agentid' => $r['ViewTStats']['agentid']
 						)
 					)
 					. '</td>';
-				echo '<td>' . $r['TmpStats']['officename'] . '</td>';
+				echo '<td>' . $r['ViewTStats']['officename'] . '</td>';
 				break;
 			case 3:
-				echo '<td>' . substr($r['TmpStats']['trxtime'], 0, 10)	. '</td>';
-				echo '<td>' . $r['TmpStats']['officename']	. '</td>';
-				echo '<td>' . $r['TmpStats']['username']	. '</td>';
+				echo '<td>' . substr($r['ViewTStats']['trxtime'], 0, 10)	. '</td>';
+				echo '<td>' . $r['ViewTStats']['officename']	. '</td>';
+				echo '<td>' . $r['ViewTStats']['username']	. '</td>';
 				break;
 			default:
 				echo '<td></td>';
 				break;
 		}
 		?>
-		<td><?php echo $r['TmpStats']['raws']; ?></td>
-		<td><?php echo $r['TmpStats']['uniques']; ?></td>
-		<!--<td><?php //echo $r['TmpStats']['chargebacks']; ?></td>-->
-		<td><?php echo $r['TmpStats']['signups']; ?></td>
+		<td><?php echo $r['ViewTStats']['raws']; ?></td>
+		<td><?php echo $r['ViewTStats']['uniques']; ?></td>
+		<!--<td><?php //echo $r['ViewTStats']['chargebacks']; ?></td>-->
+		<td><?php echo $r['ViewTStats']['signups']; ?></td>
 		<td>
 		<?php
 		$divID = "divFrauds_" . $i;
 		$extID = "imgFrauds_" . $i;
-		$frauds = $r['TmpStats']['frauds'];
+		$frauds = $r['ViewTStats']['frauds'];
 		echo $ajax->div($divID, array('style' => 'float:left;'))
 			. (empty($frauds) ? '0' : $frauds)
 			. $ajax->divEnd($divID);
@@ -323,10 +323,10 @@ if (!empty($rs)) {
 				. '</div>';
 			echo $ajax->editor($divID,
 				array('controller' => 'stats', 'action' => 'updfrauds',
-					'date' => substr($r['TmpStats']['trxtime'], 0, 10),
-					'agentid' => $r['TmpStats']['agentid'],
-					'siteid' => $r['TmpStats']['siteid'],
-					'typeid' => $r['TmpStats']['typeid']
+					'date' => substr($r['ViewTStats']['trxtime'], 0, 10),
+					'agentid' => $r['ViewTStats']['agentid'],
+					'siteid' => $r['ViewTStats']['siteid'],
+					'typeid' => $r['ViewTStats']['typeid']
 				),
 				array(
 					'okControl' => 'link',//button, link, false
@@ -343,21 +343,21 @@ if (!empty($rs)) {
 		}
 		?>
 		</td>
-		<td><?php echo $r['TmpStats']['chargebacks']; ?></td>
-		<td><?php echo $r['TmpStats']['sales_type4']; ?></td>
-		<td><?php echo $r['TmpStats']['sales_type3']; ?></td>
-		<td><?php echo $r['TmpStats']['sales_type2']; ?></td>
-		<td><?php echo $r['TmpStats']['sales_type1']; ?></td>
-		<td><?php echo $r['TmpStats']['net']; ?></td>
+		<td><?php echo $r['ViewTStats']['chargebacks']; ?></td>
+		<td><?php echo $r['ViewTStats']['sales_type4']; ?></td>
+		<td><?php echo $r['ViewTStats']['sales_type3']; ?></td>
+		<td><?php echo $r['ViewTStats']['sales_type2']; ?></td>
+		<td><?php echo $r['ViewTStats']['sales_type1']; ?></td>
+		<td><?php echo $r['ViewTStats']['net']; ?></td>
 		<?php
 		if ($_show_pay_) {
 		?>
-		<td><?php echo '$' . $r['TmpStats']['earnings']; ?></td>
-		<td><?php echo '$' . $r['TmpStats']['payouts']; ?></td>
+		<td><?php echo '$' . $r['ViewTStats']['earnings']; ?></td>
+		<td><?php echo '$' . $r['ViewTStats']['payouts']; ?></td>
 		<?php
 		} else if ($userinfo['role'] == -1) {
 		?>
-		<td><?php echo '$' . ($r['TmpStats']['earnings'] - $r['TmpStats']['payouts'])?></td>
+		<td><?php echo '$' . ($r['ViewTStats']['earnings'] - $r['ViewTStats']['payouts'])?></td>
 		<?php
 		}
 		?>

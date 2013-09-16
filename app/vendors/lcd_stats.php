@@ -27,12 +27,20 @@ if (count($typeids) != 1) {
 	exit(sprintf("The site with abbreviation \"%s\" should have 1 type at least.\n", $abbr));
 }
 /*get all the campaign mappings of the site*/
-$sql = sprintf("select * from view_mappings where siteid = %d", $siteid);
+$sql = sprintf(
+	"select a.id AS id,a.siteid AS siteid,a.agentid AS agentid, d.companyid As companyid, 
+		a.campaignid AS campaignid,a.flag AS flag,b.hostname AS hostname,b.abbr AS abbr,
+		b.sitename AS sitename,c.username AS username 
+	from agent_site_mappings a, sites b, accounts c, agents d, companies e
+	where ((a.siteid = b.id) and (a.agentid = c.id) and (a.agentid = d.id) and (d.companyid = e.id)) 
+		and siteid = %d", 
+	$siteid
+);
 $rs = mysql_query($sql, $zconn->dblink)
 	or die ("Something wrong with: " . mysql_error());
 $agents = array();
 while ($row = mysql_fetch_assoc($rs)) {
-	$agents += array($row['campaignid'] => $row['agentid']);
+	$agents += array($row['campaignid'] => array('agentid' => $row['agentid'], 'companyid' => $row['companyid']));
 }
 if (empty($agents)) {
 	exit(sprintf("The site with abbreviation \"%s\" does not have any campaign ids asigned for agents.\n", $abbr));
@@ -145,8 +153,8 @@ foreach ($xml->children() as $item) {
 		 */
 		$frauds = 0;
 		$conditions = sprintf('convert(trxtime, date) = "%s" and siteid = %d'
-			. ' and typeid = %d and agentid = %d and campaignid = "%s"',
-			$date, $siteid, $typeids[0], $agents[$campaignid], $campaignid);
+			. ' and typeid = %d and agentid = %d and companyid = %d and campaignid = "%s"',
+			$date, $siteid, $typeids[0], $agents[$campaignid]['agentid'], $agents[$campaignid]['companyid'], $campaignid);
 		$sql = 'select * from stats where ' . $conditions;
 		$result = mysql_query($sql, $zconn->dblink)
 			or die ("Something wrong with: " . mysql_error());
@@ -169,9 +177,9 @@ foreach ($xml->children() as $item) {
 		
 		$sql = sprintf(
 			'insert into stats'
-			. ' (agentid, campaignid, siteid, typeid, raws, uniques, chargebacks, signups, frauds, sales_number, trxtime)'
-			. ' values (%d, "%s", %d, %d, 0, %d, %d, %d, %d, %d, "%s")',
-			$agents[$campaignid], $campaignid, $siteid, $typeids[0],
+			. ' (agentid, companyid, campaignid, siteid, typeid, raws, uniques, chargebacks, signups, frauds, sales_number, trxtime)'
+			. ' values (%d, %d, "%s", %d, %d, 0, %d, %d, %d, %d, %d, "%s")',
+			$agents[$campaignid]['agentid'], $agents[$campaignid]['companyid'], $campaignid, $siteid, $typeids[0],
 			$item->uniques, $item->refunds, $item->frees, $frauds, $item->signups,
 			$date
 		);

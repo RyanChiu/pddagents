@@ -1,5 +1,6 @@
 <?php
 App::import('vendor', 'ExtraKits', array('file' => 'extrakits.inc.php'));
+App::import('vendor', 'ZMysqlConn', array('file' => 'zmysqlConn.class.php'));
 ?>
 <?php
 class StatsController extends AppController {
@@ -8,7 +9,7 @@ class StatsController extends AppController {
 	var $uses = array(
 		'ViewCompany', 'ViewAgent', 'Site', 'Type',
 		'Stats', 'Site', 'Type',
-		'ViewStats', 'TmpStats', 'RunStats'
+		'ViewStats', 'TmpStats', 'RunStats', 'ViewTStats'
 	);
 	var $components = array('RequestHandler');
 	var $helpers = array(
@@ -82,6 +83,39 @@ class StatsController extends AppController {
 			$conditions += array('agentid' => $this->curuser['id']);
 		}
 		return $conditions;
+	}
+	
+	function ___getwhere_4statsby_only() {
+		$where = 'where false';
+		if ($this->curuser) {
+		}
+		else return $where;
+		$where = 'where trxtime >= "' . $this->data['Stats']['startdate'] . ' 00:00:00"'
+		. ' and trxtime <= "' . $this->data['Stats']['enddate'] . ' 23:59:59"';
+		if ($this->data['Stats']['siteid'] != 0) {
+			$where .= ' and siteid = ' . $this->data['Stats']['siteid'];
+		}
+		if ($this->data['Stats']['typeid'] != 0) {
+			$where .= ' and typeid = ' . $this->data['Stats']['typeid'];
+		}
+		if ($this->curuser['role'] == 0) {//means an administrator
+			if (!empty($this->data['Stats']['companyid'])
+					&& !in_array('0', $this->data['Stats']['companyid'])) {
+				$coms = $this->data['Stats']['companyid'];
+				$where .= ' and companyid ' . (is_array($coms) ? ('in (' . implode(", ", $coms) . ')') : " = $coms");
+			}
+			if ($this->data['Stats']['agentid'] != 0) {
+				$where .= ' and agentid = ' . $this->data['Stats']['agentid'];
+			}
+		} else if ($this->curuser['role'] == 1) {//means a company
+			$where .= ' and companyid = ' . $this->curuser['id'];
+			if ($this->data['Stats']['agentid'] != 0) {
+				$where .= ' and agentid = ' . $this->data['Stats']['agentid'];
+			}
+		} else if ($this->curuser['role'] == 2) {//means an agent
+			$where .= ' and agentid = ' . $this->curuser['id'];
+		}
+		return $where;
 	}
 	
 	function ___prepconstparms_4statsby_only(
@@ -218,7 +252,6 @@ class StatsController extends AppController {
 			$coms = $this->ViewCompany->find('list',
 				array(
 					'fields' => array('companyid', 'officename'),
-					//'conditions' => array('status' => 1),
 					'order' => 'officename'
 				)
 			);
@@ -381,8 +414,11 @@ class StatsController extends AppController {
 				$gbaddons = 'convert(trxtime, date), companyid, agentid';
 				$order = 'trxtime desc, username4m asc';
 				break;
-		}	
+		}
+		$groupby = ' group by siteid, ' . $gbaddons;
+		$orderby = ' order by ' . $order;		
 			
+		$conn = new zmysqlConn();
 		if (empty($this->data)) {
 			/* see if there is already a result which was grouped by some group inserted. 
 			 * but do nothing when it's about paginating. */
@@ -398,8 +434,8 @@ class StatsController extends AppController {
 						$tmp = explode(",", $tmp_periods[3]);
 						$startdate = $tmp[0];
 						$enddate = $tmp[1];
-						$conditions['trxtime >='] = $startdate . ' 00:00:00';
-						$conditions['trxtime <='] = $enddate . ' 23:59:59';
+						$where = ' where trxtime >= "' . $startdate . ' 00:00:00"'
+							. ' and trxtime <= "' . $enddate . ' 23:59:59"';
 						$selsite = 1; // HARD CODE HERE: means the site whoes is is 1 ---start
 						$types = $this->Type->find('list',
 							array(
@@ -410,89 +446,54 @@ class StatsController extends AppController {
 						$types = array('0' => 'All') + $types;
 						$this->set(compact('types'));
 						$seltype = 0;
-						$conditions['siteid'] = $selsite; // HARD CODE HERE: means the site whoes is is 1 ---end
+						$where .= ' and siteid = ' . $selsite;
 					} else {
-						$conditions['trxtime >='] = $startdate . ' 00:00:00';
-						$conditions['trxtime <='] = $enddate . ' 23:59:59';
-						if ($selsite != -1) $conditions['siteid'] = $selsite;
-						if ($seltype != 0) $conditions['typeid'] = $seltype;
-						if (!empty($selcoms) && !in_array('0', $selcoms)) $conditions['companyid'] = $selcoms;
-						if ($selagent != 0) $conditions['agentid'] = $selagent;
+						$where = ' where trxtime >= "' . $startdate . ' 00:00:00"'
+							. ' and trxtime <= "' . $enddate . ' 23:59:59"';
+						if ($selsite != -1)
+							$where .= ' and siteid = ' . $selsite;
+						if ($seltype != 0)
+							$where .= ' and typeid = ' . $seltype;
+						if (!empty($selcoms) && !in_array('0', $selcoms)) {
+							if (count($selcoms) == 1) {
+								$where .= ' and companyid = ' . $selcoms[0];
+							} else {
+								$where .= ' and companyid in (' . implode(",", $selcoms) . ')';
+							}
+						}
+						if ($selagent != 0)
+							$where .= ' and agentid = ' . $selagent;
 					}
 					
 					if ($this->curuser['role'] == 1) {//if it's an office
-						$conditions['companyid'] = $this->curuser['id'];
+						$where .= ' and companyid = ' . $this->curuser['id'];
 					}
 					if ($this->curuser['role'] == 2) {//if it's an agent
-						$conditions['agentid'] = $this->curuser['id'];
+						$where .= ' and agentid = ' . $this->curuser['id'];
 					}
-					$rs = $this->ViewStats->find('all',
-						array(
-							'fields' => array(
-								'convert(trxtime, date) as day',
-								'companyid',
-								'officename',
-								'agentid',
-								'username',
-								'username4m',
-								'siteid',
-								'sitename',
-								'typeid',
-								'typename',
-								'sum(raws) as raws',
-								'sum(uniques) as uniques',
-								'sum(chargebacks) as chargebacks',
-								'sum(signups) as signups',
-								'sum(frauds) as frauds',
-								'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 0, 1), sales_number, 0)) as sales_type1',
-								'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 1, 1), sales_number, 0)) as sales_type2',
-								'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 2, 1), sales_number, 0)) as sales_type3',
-								'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 3, 1), sales_number, 0)) as sales_type4',
-								//'sum(sales_number) as sales_number',
-								'sum(net) as net',
-								'sum(payouts) as payouts',
-								'sum(earnings) as earnings'
-							),
-							'conditions' => $conditions,
-							'group' => 'siteid' . ', ' . $gbaddons
-						)
-					);
-					$data = array('TmpStats' => array());
-					foreach ($rs as $r) {
-						array_push(
-							$data['TmpStats'],
-							array(
-								'runid' => $this->__runid,
-								'bygroup' => $group,
-								'trxtime' => $r[0]['day'],
-								'companyid' => $r['ViewStats']['companyid'],
-								'officename' => $r['ViewStats']['officename'],
-								'agentid' => $r['ViewStats']['agentid'],
-								'username' => $r['ViewStats']['username'],
-								'username4m' => $r['ViewStats']['username4m'],
-								'siteid' => $r['ViewStats']['siteid'],
-								'sitename' => $r['ViewStats']['sitename'],
-								'typeid' => $r['ViewStats']['typeid'],
-								'typename' => $r['ViewStats']['typename'],
-								'raws' => $r[0]['raws'],
-								'uniques' => $r[0]['uniques'],
-								'chargebacks' => $r[0]['chargebacks'],
-								'signups' => $r[0]['signups'],
-								'frauds' => $r[0]['frauds'],
-								//'frauds' => ($r[0]['frauds'] + $r[0]['chargebacks']),
-								'sales_type1' => $r[0]['sales_type1'],
-								'sales_type2' => $r[0]['sales_type2'],
-								'sales_type3' => $r[0]['sales_type3'],
-								'sales_type4' => $r[0]['sales_type4'],
-								//'sales_number' => $r[0]['sales_number'],
-								'net' => $r[0]['net'],
-								'payouts' => $r[0]['payouts'],
-								'earnings' => $r[0]['earnings']
-							)
-						);
-					}
-					$this->TmpStats->deleteAll(array('runid' => $this->__runid, 'bygroup' => $group));
-					$this->TmpStats->saveAll($data['TmpStats']);
+					$sql = 'delete from t_stats where run_id = ' . $this->__runid . ' and group_by = ' . $group;
+					$result = mysql_query($sql, $conn->dblink);
+					$sql = "insert into t_stats "
+						. "select convert(trxtime, date),"
+						. "agentid,"
+						. "companyid,"
+						. "siteid,"
+						. "typeid,"
+						. "sum(raws),"
+						. "sum(uniques),"
+						. "sum(chargebacks),"
+						. "sum(signups),"
+						. "sum(frauds),"
+						. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 0, 1), sales_number, 0)) as sales_type1,"
+						. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 1, 1), sales_number, 0)) as sales_type2,"
+						. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 2, 1), sales_number, 0)) as sales_type3,"
+						. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 3, 1), sales_number, 0)) as sales_type4,"
+						. $this->__runid . ", " . $group
+						. " from stats "
+						. $where . $groupby;
+					$result = mysql_query($sql, $conn->dblink);
+					
+					//$this->Session->setFlash($sql);//for debug
 					
 					$this->Session->write('conditions_stats',
 						array(
@@ -538,74 +539,31 @@ class StatsController extends AppController {
 				}
 			}
 		} else {
-			$conditions = $this->___getcond_4statsby_only();
-			$rs = $this->ViewStats->find('all',
-				array(
-					'fields' => array(
-						'convert(trxtime, date) as day',
-						'companyid',
-						'officename',
-						'agentid',
-						'username',
-						'username4m',
-						'siteid',
-						'sitename',
-						'typeid',
-						'typename',
-						'sum(raws) as raws',
-						'sum(uniques) as uniques',
-						'sum(chargebacks) as chargebacks',
-						'sum(signups) as signups',
-						'sum(frauds) as frauds',
-						'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 0, 1), sales_number, 0)) as sales_type1',
-						'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 1, 1), sales_number, 0)) as sales_type2',
-						'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 2, 1), sales_number, 0)) as sales_type3',
-						'sum(if(typeid = (SELECT id FROM types WHERE siteid = ' . $selsite . ' order by id limit 3, 1), sales_number, 0)) as sales_type4',
-						//'sum(sales_number) as sales_number',
-						'sum(net) as net',
-						'sum(payouts) as payouts',
-						'sum(earnings) as earnings'
-					),
-					'conditions' => $conditions,
-					'group' => 'siteid' . ', ' . $gbaddons
-				)
-			);
-			$data = array('TmpStats' => array());
-			foreach ($rs as $r) {
-				array_push(
-					$data['TmpStats'],
-					array(
-						'runid' => $this->__runid,
-						'bygroup' => $group,
-						'trxtime' => $r[0]['day'],
-						'companyid' => $r['ViewStats']['companyid'],
-						'officename' => $r['ViewStats']['officename'],
-						'agentid' => $r['ViewStats']['agentid'],
-						'username' => $r['ViewStats']['username'],
-						'username4m' => $r['ViewStats']['username4m'],
-						'siteid' => $r['ViewStats']['siteid'],
-						'sitename' => $r['ViewStats']['sitename'],
-						'typeid' => $r['ViewStats']['typeid'],
-						'typename' => $r['ViewStats']['typename'],
-						'raws' => $r[0]['raws'],
-						'uniques' => $r[0]['uniques'],
-						'chargebacks' => $r[0]['chargebacks'],
-						'signups' => $r[0]['signups'],
-						'frauds' => $r[0]['frauds'],
-						//'frauds' => ($r[0]['frauds'] + $r[0]['chargebacks']),
-						'sales_type1' => $r[0]['sales_type1'],
-						'sales_type2' => $r[0]['sales_type2'],
-						'sales_type3' => $r[0]['sales_type3'],
-						'sales_type4' => $r[0]['sales_type4'],
-						//'sales_number' => $r[0]['sales_number'],
-						'net' => $r[0]['net'],
-						'payouts' => $r[0]['payouts'],
-						'earnings' => $r[0]['earnings']
-					)
-				);
-			}
-			$this->TmpStats->deleteAll(array('runid' => $this->__runid, 'bygroup' => $group));
-			$this->TmpStats->saveAll($data['TmpStats']);
+			$where = $this->___getwhere_4statsby_only();
+			$sql = 'delete from t_stats where run_id = ' . $this->__runid . ' and group_by = ' . $group;
+			$result = mysql_query($sql, $conn->dblink);
+			$sql = "insert into t_stats "
+				. "select convert(trxtime, date),"
+				. "agentid,"
+				. "companyid,"
+				. "siteid,"
+				. "typeid,"
+				. "sum(raws),"
+				. "sum(uniques),"
+				. "sum(chargebacks),"
+				. "sum(signups),"
+				. "sum(frauds),"
+				. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 0, 1), sales_number, 0)) as sales_type1,"
+				. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 1, 1), sales_number, 0)) as sales_type2,"
+				. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 2, 1), sales_number, 0)) as sales_type3,"
+				. "sum(if(typeid = (SELECT id FROM types WHERE siteid = $selsite order by id limit 3, 1), sales_number, 0)) as sales_type4,"
+				. $this->__runid . ", " . $group
+				. " from stats "
+				. $where . $groupby;
+			$result = mysql_query($sql, $conn->dblink);
+			
+			//$this->Session->setFlash($sql);//for debug
+			
 			$startdate = $this->data['Stats']['startdate'];
 			$enddate = $this->data['Stats']['enddate'];
 			$selsite = $this->data['Stats']['siteid'];
@@ -651,10 +609,10 @@ class StatsController extends AppController {
 			'sales_type1' => 0, 'sales_type2' => 0, 'sales_type3' => 0, 'sales_type4' => 0,
 			'net' => 0, 'payouts' => 0, 'earnings' => 0
 		);
-		$rs = $this->TmpStats->find('all',
+		$rs = $this->ViewTStats->find('all',
 			array(
 				'fields' => array(
-					'runid',
+					'run_id',
 					'sum(raws) as raws',
 					'sum(uniques) as uniques',
 					'sum(chargebacks) as chargebacks',
@@ -668,8 +626,8 @@ class StatsController extends AppController {
 					'sum(payouts) as payouts',
 					'sum(earnings) as earnings'
 				),
-				'conditions' => array('runid' => $this->__runid, 'bygroup' => $group),
-				'group' => 'runid'
+				'conditions' => array('run_id' => $this->__runid, 'group_by' => $group),
+				'group' => 'run_id'
 			)
 		);
 		if (!empty($rs)) {
@@ -689,14 +647,14 @@ class StatsController extends AppController {
 		$this->set('totals', $totals);
 		/*pagination things*/
 		$this->paginate = array(
-			'TmpStats' => array(
-				'conditions' => array('runid' => $this->__runid, 'bygroup' => $group),
+			'ViewTStats' => array(
+				'conditions' => array('run_id' => $this->__runid, 'group_by' => $group),
 				'order' => $order,
 				'limit' => $this->__limit
 			)
 		);		
 		$this->set('rs',
-			$this->paginate('TmpStats')
+			$this->paginate('ViewTStats')
 		);
 	}
 	

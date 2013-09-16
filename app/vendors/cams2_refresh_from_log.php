@@ -9,7 +9,7 @@ include 'extrakits.inc.php';
 const ONLYIP = "66.180.199.11";
 if ($argc != 3) 
 	exit("Please give a file name and a date, like 'in.log 2013-09-09'...\n");
-$fstr = file_get_contents("./" . $argv[1]);
+$fstr = file_get_contents($argv[1]);
 $day = $argv[2];
 $search = ONLYIP . "/" . $day;
 
@@ -106,9 +106,10 @@ for ($j = 0; $j < count($posts); $j++) {
 	$unique = $posts[$j]['unique'];
 	$trxtime = $posts[$j]['trxtime'];
 	
-	$sql = "select a.*, b.id as 'typeid'" .
-		" from agent_site_mappings a, sites s, accounts n, types b" .
-		" where a.siteid = s.id and a.siteid = b.siteid and s.abbr = 'cams2'" .
+	$sql = "select a.*, g.companyid, b.id as 'typeid'" .
+		" from agent_site_mappings a, sites s, accounts n, types b, agents g, companies m" .
+		" where a.siteid = s.id and a.siteid = b.siteid and s.abbr = '$abbr'" .
+		" and a.agentid = g.id and g.companyid = m.id" .
 		" and a.agentid = n.id and n.username = '$agent'" .
 		" ORDER BY typeid";
 	//echo "($sql)" . "\n";continue;//for debug
@@ -119,14 +120,15 @@ for ($j = 0; $j < count($posts); $j++) {
 		if ($i == $ch) {
 			$typeid = $r['typeid'];
 			$agid = $r['agentid'];
+			$comid = $r['companyid'];
 			$siteid = $r['siteid'];
 			$campid = $r['campaignid'];
 			$clicks = ($type == 'click' ? 1 : 0);
 			$uniques = ($unique == 'y' ? 1 : 0);
 			$sales = ($type == 'sale' ? 1 : 0);
 	
-			$sql = "insert into stats (agentid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
-				. " values ($agid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
+			$sql = "insert into stats (agentid, companyid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
+				. " values ($agid, $comid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
 			//echo "($j)" . $sql . "\n"; break; //for debug;
 	
 			if (mysql_query($sql, $conn->dblink) === false) {

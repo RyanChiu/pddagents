@@ -281,13 +281,14 @@ if (!empty($rs)) {
 							'agentid' => $r['ViewTStats']['agentid']
 						)
 					)
+					. '&nbsp;(' . $r['ViewTStats']['ag1stname'] . '&nbsp;' . $r['ViewTStats']['aglastname'] . ')'
 					. '</td>';
 				echo '<td>' . $r['ViewTStats']['officename'] . '</td>';
 				break;
 			case 3:
-				echo '<td>' . substr($r['ViewTStats']['trxtime'], 0, 10)	. '</td>';
-				echo '<td>' . $r['ViewTStats']['officename']	. '</td>';
-				echo '<td>' . $r['ViewTStats']['username']	. '</td>';
+				echo '<td>' . substr($r['ViewTStats']['trxtime'], 0, 10) . '</td>';
+				echo '<td>' . $r['ViewTStats']['officename'] . '</td>';
+				echo '<td>' . $r['ViewTStats']['username'] . '&nbsp;(' . $r['ViewTStats']['ag1stname'] . '&nbsp;' . $r['ViewTStats']['aglastname'] . ')' . '</td>';
 				break;
 			default:
 				echo '<td></td>';

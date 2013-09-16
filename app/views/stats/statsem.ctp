@@ -138,7 +138,7 @@ if (!empty($rs)) {
 				break;
 		}
 		?>	
-		<th><?php echo $exPaginator->sort('Raws', 'ViewTStats.raws'); ?></th>
+		<th class="naClassHide"><?php echo $exPaginator->sort('Raws', 'ViewTStats.raws'); ?></th>
 		<th <?php echo !in_array($selsite, array(-1, -2)) ? '' : 'class="naClassHide"'; ?>>
 		<?php echo $exPaginator->sort('Uniques', 'ViewTStats.uniques'); ?>
 		</th>

@@ -234,7 +234,7 @@ if (!empty($rs)) {
 		$pagetotals['earnings'] += $r['ViewTStats']['earnings'];
 	?>
 	<tr<?php echo ($i % 2 == 0 ? '' : ' class="odd"'); ?>>
-		<td><?php echo ($i + 1 + $limit * ($paginator->current() - 1)); ?></td>
+		<td><font size="1"><?php echo ($i + 1 + $limit * ($paginator->current() - 1)); ?></font></td>
 		<?php
 		switch ($bywhat) {
 			case 0:

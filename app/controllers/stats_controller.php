@@ -656,6 +656,7 @@ class StatsController extends AppController {
 		$this->set('rs',
 			$this->paginate('ViewTStats')
 		);
+		$this->set('limit', $this->__limit);
 	}
 	
 	function statsdate() {

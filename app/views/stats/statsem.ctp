@@ -116,6 +116,7 @@ if (!empty($rs)) {
 	</caption>
 	<thead>
 	<tr>
+		<th><!-- numbered --></th>
 		<?php
 		switch ($bywhat) {
 			case 0:
@@ -233,6 +234,7 @@ if (!empty($rs)) {
 		$pagetotals['earnings'] += $r['ViewTStats']['earnings'];
 	?>
 	<tr<?php echo ($i % 2 == 0 ? '' : ' class="odd"'); ?>>
+		<td><?php echo ($i + 1 + $limit * ($paginator->current() - 1)); ?></td>
 		<?php
 		switch ($bywhat) {
 			case 0:
@@ -371,17 +373,17 @@ if (!empty($rs)) {
 		<?php
 		switch ($bywhat) {
 			case 0:
-				echo '<td class="totals" align="right">Page Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Page Total</td>';
 				break;
 			case 1:
-				echo '<td class="totals" align="right">Page Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Page Total</td>';
 				break;
 			case 2:
-				echo '<td class="totals" align="right">Page Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Page Total</td>';
 				echo '<td class="totals"></td>';
 				break;
 			case 3:
-				echo '<td class="totals" align="right">Page Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Page Total</td>';
 				echo '<td class="totals"></td>';
 				echo '<td class="totals"></td>';
 				break;
@@ -418,17 +420,17 @@ if (!empty($rs)) {
 		<?php
 		switch ($bywhat) {
 			case 0:
-				echo '<td class="totals" align="right">Overall Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Overall Total</td>';
 				break;
 			case 1:
-				echo '<td class="totals" align="right">Overall Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Overall Total</td>';
 				break;
 			case 2:
-				echo '<td class="totals" align="right">Overall Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Overall Total</td>';
 				echo '<td class="totals"></td>';
 				break;
 			case 3:
-				echo '<td class="totals" align="right">Overall Total</td>';
+				echo '<td class="totals" align="right" colspan="2">Overall Total</td>';
 				echo '<td class="totals"></td>';
 				echo '<td class="totals"></td>';
 				break;
@@ -465,17 +467,17 @@ if (!empty($rs)) {
 		<?php
 		switch ($bywhat) {
 			case 0:
-				echo '<td class="totals" align="right">Unique to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Unique to Sale Ratio</td>';
 				break;
 			case 1:
-				echo '<td class="totals" align="right">Unique to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Unique to Sale Ratio</td>';
 				break;
 			case 2:
-				echo '<td class="totals" align="right">Unique to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Unique to Sale Ratio</td>';
 				echo '<td class="totals"></td>';
 				break;
 			case 3:
-				echo '<td class="totals" align="right">Unique to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Unique to Sale Ratio</td>';
 				echo '<td class="totals"></td>';
 				echo '<td class="totals"></td>';
 				break;
@@ -521,17 +523,17 @@ if (!empty($rs)) {
 		<?php
 		switch ($bywhat) {
 			case 0:
-				echo '<td class="totals" align="right">Signup to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Signup to Sale Ratio</td>';
 				break;
 			case 1:
-				echo '<td class="totals" align="right">Signup to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Signup to Sale Ratio</td>';
 				break;
 			case 2:
-				echo '<td class="totals" align="right">Signup to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Signup to Sale Ratio</td>';
 				echo '<td class="totals"></td>';
 				break;
 			case 3:
-				echo '<td class="totals" align="right">Signup to Sale Ratio</td>';
+				echo '<td class="totals" align="right" colspan="2">Signup to Sale Ratio</td>';
 				echo '<td class="totals"></td>';
 				echo '<td class="totals"></td>';
 				break;

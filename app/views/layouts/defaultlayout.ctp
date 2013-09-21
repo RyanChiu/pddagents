@@ -25,6 +25,10 @@ echo $html->css('jQuery/Datepicker/green');
 echo $javascript->link('jQuery/Datepicker/jquery-1.3.2.min');
 echo $javascript->link('jQuery/Datepicker/jquery-ui-1.7.custom.min');
 
+/*for cufon*/
+echo $javascript->link('cufon/cufon-yui');
+echo $javascript->link('cufon/Chiller_400.font');
+
 /*for self-developed zToolkits*/
 echo $javascript->link('zToolkits');
 
@@ -43,10 +47,6 @@ echo $javascript->link('ckeditor/ckeditor');
 /*for fancybox*/
 echo $html->css('fancybox/jquery.fancybox-1.3.3', null, array('media' => 'screen'));
 echo $javascript->link('fancybox/jquery.fancybox-1.3.3.pack');
-
-/*for cufon*/
-echo $javascript->link('cufon/cufon-yui');
-echo $javascript->link('cufon/Chiller_400.font');
 
 /*for AJAX*/
 echo $javascript->link('ajax/prototype');

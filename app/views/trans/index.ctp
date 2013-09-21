@@ -143,17 +143,17 @@ if (!empty($notes)) {
 		?>
 		<tr <?php echo $i <= 3 ? 'style="font-weight:bold;"' : ''; ?>>
 			<td align="center"><?php echo $i; ?></td>
-			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r['ViewStats']['officename'] : $r['ViewStats']['officename']; ?></td>
+			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r['Top10Stats']['officename'] : $r['Top10Stats']['officename']; ?></td>
 			<td align="center">
 				<font style="font-size: 9pt;">
 				<?php
-				echo $r[0]['sales'] > 0 ? $r['ViewStats']['username'] : $r['ViewStats']['username'];
+				echo $r[0]['sales'] > 0 ? $r['Top10Stats']['username'] : $r['Top10Stats']['username'];
 				?>
 				</font>
 				<font style="font-size: 10pt;">(
 				<?php
-				//$showname = $r['ViewStats']['ag1stname'] . " " . $r['ViewStats']['aglastname'];
-				$showname = $r['ViewStats']['ag1stname'];
+				//$showname = $r['Top10Stats']['ag1stname'] . " " . $r['Top10Stats']['aglastname'];
+				$showname = $r['Top10Stats']['ag1stname'];
 				echo strlen($showname) > 20 ? (substr($showname, 0, 17) . "...") : $showname;
 				?>
 				)</font>
@@ -197,17 +197,17 @@ if (!empty($notes)) {
 		?>
 		<tr <?php echo $i <= 3 ? 'style="font-weight:bold;"' : ''; ?>>
 			<td align="center"><?php echo $i; ?></td>
-			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r['ViewStats']['officename'] : $r['ViewStats']['officename']; ?></td>
+			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r['Top10Stats']['officename'] : $r['Top10Stats']['officename']; ?></td>
 			<td align="center">
 				<font style="font-size: 9pt;">
 				<?php
-				echo $r[0]['sales'] > 0 ? $r['ViewStats']['username'] : $r['ViewStats']['username'];
+				echo $r[0]['sales'] > 0 ? $r['Top10Stats']['username'] : $r['Top10Stats']['username'];
 				?>
 				</font>
 				<font style="font-size: 10pt;">(
 				<?php
-				//$showname = $r['ViewStats']['ag1stname'] . " " . $r['ViewStats']['aglastname'];
-				$showname = $r['ViewStats']['ag1stname'];
+				//$showname = $r['Top10Stats']['ag1stname'] . " " . $r['Top10Stats']['aglastname'];
+				$showname = $r['Top10Stats']['ag1stname'];
 				echo strlen($showname) > 20 ? (substr($showname, 0, 17) . "...") : $showname;
 				?>
 				)</font>

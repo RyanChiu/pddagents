@@ -186,15 +186,14 @@ class TransController extends AppController {
 				'fields' => array('id', 'id')
 			)
 		);
-		$rs = $this->ViewStats->find('all',
+		$rs = $this->Stats->find('all',
 			array(
 				'fields' => array('agentid', 'sum(sales_number - chargebacks) as sales'),
 				'conditions' => array(
 					'convert(trxtime, date) <=' => $conds['enddate'],
 					'convert(trxtime, date) >=' => $conds['startdate'],
 					'typeid' => $tps,
-					'agentid >' => '0',//avoid those data that don't belog to any agent
-					'status' => 1
+					'agentid >' => '0'//avoid those data that don't belog to any agent
 				),
 				'group' => array('agentid'),
 				'order' => array('sales desc'),
@@ -206,13 +205,16 @@ class TransController extends AppController {
 			$topac = $this->Account->find('first',
 				array(
 					'fields' => array('username'),
-					'conditions' => array('id' => $r['ViewStats']['agentid'])
+					'conditions' => array(
+						'id' => $r['Stats']['agentid'],
+						'status' => 1
+					)
 				)
 			);
 			$topag = $this->Agent->find('first',
 				array(
 					'fields' => array('companyid', 'ag1stname', 'aglastname'),
-					'conditions' => array('id' => $r['ViewStats']['agentid'])
+					'conditions' => array('id' => $r['Stats']['agentid'])
 				)
 			);
 			$topcom = $this->Company->find('first',
@@ -221,12 +223,14 @@ class TransController extends AppController {
 					'conditions' => array('id' => $topag['Agent']['companyid'])
 				)
 			);
-			$rs[$i]['ViewStats']['officename'] = $topcom['Company']['officename'];
-			$rs[$i]['ViewStats']['username'] = $topac['Account']['username'];
-			$rs[$i]['ViewStats']['ag1stname'] = $topag['Agent']['ag1stname'];
-			$rs[$i]['ViewStats']['aglastname'] = $topag['Agent']['aglastname'];
-			$rs[$i]['ViewStats']['sales'] = $r[0]['sales'];
-			$i++;
+			if (!empty($topac)) {
+				$rs[$i]['Top10Stats']['officename'] = $topcom['Company']['officename'];
+				$rs[$i]['Top10Stats']['username'] = $topac['Account']['username'];
+				$rs[$i]['Top10Stats']['ag1stname'] = $topag['Agent']['ag1stname'];
+				$rs[$i]['Top10Stats']['aglastname'] = $topag['Agent']['aglastname'];
+				$rs[$i]['Top10Stats']['sales'] = $r[0]['sales'];
+				$i++;
+			}
 		}
 		return $rs;
 	}
@@ -352,7 +356,7 @@ class TransController extends AppController {
 		//avoid those data which are not in types
 		$conds['startdate'] = '0000-00-00';
 		$conds['enddate'] = date('Y-m-d');
-		$rs = array(); ///*disable all top 10 for the moment*/$this->__top10($conds);
+		$rs = $this->__top10($conds);
 		$this->set(compact('rs'));
 		$weekend = date("Y-m-d", strtotime(date('Y-m-d') . " Saturday"));
 		$weekstart = date("Y-m-d", strtotime($weekend . " - 6 days"));

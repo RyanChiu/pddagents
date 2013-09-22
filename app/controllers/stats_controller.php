@@ -436,7 +436,7 @@ class StatsController extends AppController {
 						$enddate = $tmp[1];
 						$where = ' where trxtime >= "' . $startdate . ' 00:00:00"'
 							. ' and trxtime <= "' . $enddate . ' 23:59:59"';
-						$selsite = 1; // HARD CODE HERE: means the site whoes is is 1 ---start
+						$selsite = -1; // HARD CODE HERE: means no default site
 						$types = $this->Type->find('list',
 							array(
 								'fields' => array('id', 'typename'),

@@ -28,7 +28,13 @@ echo $javascript->link('jQuery/Datepicker/jquery-ui-1.7.custom.min');
 /*for cufon*/
 echo $javascript->link('cufon/cufon-yui');
 echo $javascript->link('cufon/Chiller_400.font');
+?>
 
+<script type="text/javascript">
+	Cufon.replace(".header");
+</script>
+
+<?php 
 /*for self-developed zToolkits*/
 echo $javascript->link('zToolkits');
 
@@ -55,9 +61,6 @@ echo $javascript->link('ajax/scriptaculous');
 echo $scripts_for_layout;
 
 ?>
-<script type="text/javascript">
-	Cufon.replace(".header");
-</script>
 </head>
 <body bgcolor="#ffffff">
 	<div class="wrapper">

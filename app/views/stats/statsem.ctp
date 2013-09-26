@@ -177,7 +177,7 @@ if (!empty($rs)) {
 			. '<br/><i>' . (count($typesv) > 4 ? $typesv[4] : 'N/A') . '</i>';
 		?>
 		</th>
-		<th <?php echo count($typesv) > 3 ? '' : 'class="naClassHide"'; ?>>
+		<th <?php echo count($typesv) > 3 /*hard code here-start*/ && $typesv[3] != 'Tour-1' /*hard code here-end*/ ? '' : 'class="naClassHide"'; ?>>
 		<?php
 		echo $exPaginator->sort('Sale', 'ViewTStats.sales_type3')
 			. '<br/><i>' . (count($typesv) > 3 ? $typesv[3] : 'N/A') . '</i>';

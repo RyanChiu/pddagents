@@ -222,9 +222,9 @@ class LinksController extends AppController {
 					'order' => 'username4m'
 				)
 			);
-			$sites = $this->ViewSite->find('list',
+			$sites = $this->Site->find('list',
 				array(
-					'fields' => array('id', 'sitenametype'),
+					'fields' => array('id', 'sitename'),
 					'order' => 'id'
 				)
 			);
@@ -246,9 +246,9 @@ class LinksController extends AppController {
 					'group' => 'siteid'
 				)
 			);
-			$sites = $this->ViewSite->find('list',
+			$sites = $this->Site->find('list',
 				array(
-					'fields' => array('id', 'sitenametype'),
+					'fields' => array('id', 'sitename'),
 					'conditions' => array('status' => 1, 'not' => array('id' => $__exsites)),
 					'order' => 'sitename'
 				)

@@ -1,0 +1,1 @@
+ALTER TABLE `types` ADD `typealias` VARCHAR( 64 ) NOT NULL AFTER `typename` 

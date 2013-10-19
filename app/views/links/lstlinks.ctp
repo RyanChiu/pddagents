@@ -108,7 +108,7 @@ if (!empty($rs)) {
 				}
 			}
 			
-			echo $sites[$r['AgentSiteMapping']['siteid']] . '_' . $type['Type']['typename'] 
+			echo $sites[$r['AgentSiteMapping']['siteid']] . '_' . $type['Type']['typealias'] 
 				. $typealias . ':&nbsp;&nbsp;&nbsp;';
 			echo '<b>';
 			echo $html->url(array('controller' => 'trans', 'action' => 'go'), true) . '/'

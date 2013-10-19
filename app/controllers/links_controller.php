@@ -7,7 +7,8 @@ class LinksController extends AppController {
 	/*properties*/
 	var $name = 'Links';
 	var $uses = array(
-		'Link', 'Site', 'Type', 'Fee', 'Clickout', 'Company',
+		'Link', 'Site', 'Type', 'Fee', 'Clickout', 
+		'Account', 'Company', 'Agent',
 		'ViewLink', 'ViewSite', 'ViewType', 'ViewClickout',
 		'ViewCompany', 'ViewAgent',
 		'AgentSiteMapping', 'ViewMapping',
@@ -213,12 +214,13 @@ class LinksController extends AppController {
 			)
 		);
 		if ($this->curuser['role'] == 0) {//means an administrator
-			$ags = $this->ViewAgent->find('list',
+			$ags = $this->Account->find('list',
 				array(
 					'fields' =>	array(
-						'ViewAgent.id',
-						'ViewAgent.username'
+						'id',
+						'username'
 					),
+					'conditions' => array('role' => 2),
 					'order' => 'username4m'
 				)
 			);
@@ -232,8 +234,8 @@ class LinksController extends AppController {
 			$ags = $this->ViewAgent->find('list',
 				array(
 					'fields' =>	array(
-						'ViewAgent.id',
-						'ViewAgent.username'
+						'id',
+						'username'
 					),
 					'conditions' => array('companyid' => $this->curuser['id']),
 					'order' => 'username4m'
@@ -263,17 +265,17 @@ class LinksController extends AppController {
 			);
 			*/
 		} else if ($this->curuser['role'] == 2) {//means an agent
-			$ags = $this->ViewAgent->find('list',
+			$ags = $this->Account->find('list',
 				array(
 					'fields' =>	array(
-						'ViewAgent.id',
-						'ViewAgent.username'
+						'id',
+						'username'
 					),
-					'conditions' => array('id' => $this->curuser['id']),
+					'conditions' => array('id' => $this->curuser['id'], 'role' => 2),
 					'order' => 'username4m'
 				)
 			);
-			$agcp = $this->ViewAgent->find('first',
+			$agcp = $this->Agent->find('first',
 				array(
 					'conditions' => array('id' => $this->curuser['id'])
 				)
@@ -281,7 +283,7 @@ class LinksController extends AppController {
 			$__exsites = $this->SiteExcluding->find('list',
 				array(
 					'fields' => array('siteid'),
-					'conditions' => array('companyid' => $agcp['ViewAgent']['companyid']),
+					'conditions' => array('companyid' => $agcp['Agent']['companyid']),
 					'group' => 'siteid'
 				)
 			);
@@ -321,7 +323,7 @@ class LinksController extends AppController {
 		$this->set('rs', array());
 		if (!empty($this->data)) {
 			if ($this->data['Site']['id'] == -1) {//REMARK IT FROM CCI:site CAM4 is the 1st & special one
-				$agent = $this->ViewAgent->find('first',
+				$agent = $this->Agent->find('first',
 					array(
 						'conditions' => array('id' => $this->data['ViewAgent']['id'])
 					)
@@ -329,18 +331,18 @@ class LinksController extends AppController {
 				/*read the rss into $items*/
 				$url = sprintf(
 					'http://webmasters.cams4pleasure.com/custom/campaigns2.php?username=bvlgari2010&password=dreaming&campaign=%s',
-					$agent['ViewAgent']['username']
+					$agent['Agent']['username']
 				);//this url is just for type 1 ~ type 3
 				$items = $this->__getlinks_4cam4_only($url);
 				$url = sprintf(
 					'http://webmasters.cams4pleasure.com/custom/campaigns3.php?username=bvlgari2010&password=dreaming&campaign=%s',
-					$agent['ViewAgent']['username']
+					$agent['Agent']['username']
 				);//this url is just for type 7
 				$__items = $this->__getlinks_4cam4_only($url);
 				$items[0] += array('link_type7' => $__items[0]['link_type7']);
 	
 				foreach ($items as $item) {
-					if (strtolower($item['name']) == strtolower($agent['ViewAgent']['username'])) {//if $item['name'] equals to POST username
+					if (strtolower($item['name']) == strtolower($agent['Agent']['username'])) {//if $item['name'] equals to POST username
 						$typedata = $this->Type->find('all',
 							array(
 								'conditions' => array(
@@ -357,14 +359,14 @@ class LinksController extends AppController {
 							$r = $this->Link->find('first',
 								array(
 									'conditions' => array(
-										'agentid' => $agent['ViewAgent']['id'],
+										'agentid' => $agent['Agent']['id'],
 										'typeid' => $typedata[$i]['Type']['id']
 									)
 								)
 							);
 							if (empty($r)) {//if not exist, insert it
 								$this->data['Link']['id'] = null;
-								$this->data['Link']['agentid'] = $agent['ViewAgent']['id'];
+								$this->data['Link']['agentid'] = $agent['Agent']['id'];
 								$this->data['Link']['siteid'] = $this->data['Site']['id'];//??
 								//$this->data['Link']['typeid'] = '1';
 								$this->data['Link']['typeid'] = $typedata[$i]['Type']['id'];
@@ -408,7 +410,7 @@ class LinksController extends AppController {
 							$this->ViewLink->find('all',
 								array(
 									'conditions' => array(
-										'agentid' => $agent['ViewAgent']['id'],
+										'agentid' => $agent['Agent']['id'],
 										'status' => '1'
 									)
 								)

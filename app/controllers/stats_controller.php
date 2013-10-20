@@ -7,7 +7,7 @@ class StatsController extends AppController {
 	/*properties*/
 	var $name = 'Stats';
 	var $uses = array(
-		'ViewCompany', 'ViewAgent', 'Site', 'Type',
+		'ViewCompany', 'ViewLiteAgent', 'Site', 'Type',
 		'Stats', 'Site', 'Type',
 		'ViewStats', 'TmpStats', 'RunStats', 'ViewTStats'
 	);
@@ -259,7 +259,7 @@ class StatsController extends AppController {
 		$coms = array('0' => 'All') + $coms;
 
 		if ($this->curuser['role'] == 0) {//means an administrator
-			$ags = $this->ViewAgent->find('list',
+			$ags = $this->ViewLiteAgent->find('list',
 				array(
 					'fields' => array('id', 'username'),
 					'conditions' => array(/*'status' => 1*/)
@@ -268,7 +268,7 @@ class StatsController extends AppController {
 				)
 			);
 		} else if ($this->curuser['role'] == 1) {//means an office
-			$ags = $this->ViewAgent->find('list',
+			$ags = $this->ViewLiteAgent->find('list',
 				array(
 					'fields' => array('id', 'username'),
 					'conditions' => array(
@@ -279,7 +279,7 @@ class StatsController extends AppController {
 				)
 			);
 		} else if ($this->curuser['role'] == 2) {//means an agent
-			$ags = $this->ViewAgent->find('list',
+			$ags = $this->ViewLiteAgent->find('list',
 				array(
 					'fields' => array('id', 'username'),
 					'conditions' => array(
@@ -713,7 +713,7 @@ class StatsController extends AppController {
 		$options = array('0' => 'All');
 		if(!empty($this->data['Stats']['companyid'])
 			&& !in_array('0', $this->data['Stats']['companyid'])) {
-		    $options = $options + $this->ViewAgent->find('list',
+		    $options = $options + $this->ViewLiteAgent->find('list',
 		    	array(
 		    		'fields' => array('id', 'username'),
 		    		'conditions' => array('companyid' => $this->data['Stats']['companyid']),
@@ -721,7 +721,7 @@ class StatsController extends AppController {
 		    	)
 		    );
 		} else {
-			$options = $options + $this->ViewAgent->find('list',
+			$options = $options + $this->ViewLiteAgent->find('list',
 		    	array(
 		    		'fields' => array('id', 'username'),
 		    		'order' => 'username4m'

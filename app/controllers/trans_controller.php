@@ -10,7 +10,7 @@ class TransController extends AppController {
 		'OnlineLog', 'ViewOnlineLog',
 		'Link', 'Clickout', 'AgentSiteMapping', 'Type',
 		'Site', 'SiteExcluding', 'Stats',
-		'ViewAdmin', 'ViewCompany', 'ViewAgent',
+		'ViewAdmin', 'ViewCompany', 'ViewAgent', 'ViewLiteAgent',
 		'ViewStats', 'ViewMapping', 'SiteManual',
 		'FakeContactUs'
 	);
@@ -1699,7 +1699,7 @@ class TransController extends AppController {
 			)
 		);
 		if (count($coms) > 1) $coms = array('0' => 'All') + $coms;
-		$ags = $this->ViewAgent->find('list',
+		$ags = $this->ViewLiteAgent->find('list',
 			array(
 				'fields' => array('id', 'username'),
 				'conditions' => array('companyid' => ($selcom == 0 ? array_keys($coms) : $selcom)),
@@ -2015,7 +2015,7 @@ class TransController extends AppController {
 			)
 		);
 		if (count($coms) > 1) $coms = array('0' => 'All') + $coms;
-		$ags = $this->ViewAgent->find('list',
+		$ags = $this->ViewLiteAgent->find('list',
 			array(
 				'fields' => array('id', 'username'),
 				'conditions' => array('companyid' => ($selcom == 0 ? array_keys($coms) : $selcom)),
@@ -2194,7 +2194,7 @@ class TransController extends AppController {
 			}
 		}
 		
-		$r = $this->ViewAgent->find('first',
+		$r = $this->ViewLiteAgent->find('first',
 			array(
 				'conditions' => array(
 					'lower(username)' => strtolower($agentusername)
@@ -2205,7 +2205,7 @@ class TransController extends AppController {
 			$this->Session->setFlash("Agent does not exist, please try again.");
 			return;
 		}
-		$agentid = $r['ViewAgent']['id'];
+		$agentid = $r['ViewLiteAgent']['id'];
 		/*
 		$companyid = $r['ViewAgent']['companyid'];		
 		$r = $this->SiteExcluding->find('first',
@@ -2226,11 +2226,11 @@ class TransController extends AppController {
 		/*
 		 * if an agent or its office is suspended, we don't redirect it.
 		 */
-		if ($r['ViewAgent']['status'] == 0) {
+		if ($r['ViewLiteAgent']['status'] == 0) {
 			$this->Session->setFlash("Sorry, you are suspended for the moment.");
 			return;
 		}
-		$this->Account->id = $r['ViewAgent']['companyid'];
+		$this->Account->id = $r['ViewLiteAgent']['companyid'];
 		$r = $this->Account->read();
 		if ($r['Account']['status'] == 0 ) {
 			$this->Session->setFlash("Sorry, your office are suspended for the moment.");

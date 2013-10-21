@@ -455,8 +455,8 @@ if (!empty($rs)) {
 		<?php
 		if ($_show_pay_) {
 		?>
-		<td class="totals"><?php echo '$' . $totals['earnings']; ?></td>
-		<td class="totals"><?php echo '$' . $totals['payouts']; ?></td>
+		<td class="totals"><?php echo '$' . sprintf('%.2f', $totals['earnings']); ?></td>
+		<td class="totals"><?php echo '$' . sprintf('%.2f', $totals['payouts']); ?></td>
 		<?php
 		} else if ($userinfo['role'] == -1) {
 		?>

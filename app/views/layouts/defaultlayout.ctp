@@ -25,14 +25,7 @@ echo $html->css('jQuery/Datepicker/green');
 echo $javascript->link('jQuery/Datepicker/jquery-1.3.2.min');
 echo $javascript->link('jQuery/Datepicker/jquery-ui-1.7.custom.min');
 
-/*for cufon*/
-echo $javascript->link('cufon/cufon-yui');
-echo $javascript->link('cufon/Chiller_400.font');
 ?>
-
-<script type="text/javascript">
-	Cufon.replace(".header");
-</script>
 
 <?php 
 /*for self-developed zToolkits*/
@@ -71,14 +64,11 @@ echo $scripts_for_layout;
 				<div style="float: left; padding: 0px 0px 0px 6px;">
 					<p>&nbsp;</p>
 					<a href="http://www.myspace.com/paydirtau/radio">
-					<?php echo $html->image('k10387380.jpg', array('style' => 'height:90px; border: 0px;')); ?>
+					<?php echo $html->image('k10387380.jpg', array('style' => 'height:90px;border:0px;')); ?>
 					</a>
 				</div>
-				<div style="float: right; padding: 0px 0px 0px 0px;">
-					<font
-						style="font-size: 48.0pt; font-weight: bold; color: #dc9e38">www</font><font
-						style="font-size: 72.0pt; font-weight: bold; color: #dc9e38">.PayDirtDollars.</font><font
-						style="font-size: 48.0pt; font-weight: bold; color: #dc9e38">com</font>
+				<div style="float:right;padding:0;">
+					<?php echo $html->image('main/toprightlogo.png', array('style' => 'border:0px;'));?>
 				</div>
 			</div>
 			<!-- End Header -->
@@ -759,7 +749,5 @@ echo $scripts_for_layout;
 		tabdropdown.init("moonmenu", <?php echo $curmenuidx; ?>);
 	</script>
 	
-	<!-- To avoid delays, initialize Cufón before other scripts at the bottom -->
-	<script type="text/javascript"> Cufon.now(); </script>
 </body>
 </html>

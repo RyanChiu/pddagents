@@ -277,8 +277,8 @@ class TransController extends AppController {
 	}
 	
 	function pass() {
+		$this->autoRender = false;
 		$this->Session->write('switch_pass', 1);
-		$this->redirect(array('controller' => 'trans', 'action' => 'index'));
 	}
 	
 	function index($id = null) {

@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `top10s` (
   `date` date NOT NULL,
   `agentid` int(11) NOT NULL,
   `username` varchar(64) COLLATE ascii_bin NOT NULL,
+  `ag1stname` varchar(64) COLLATE ascii_bin NOT NULL,
   `officename` varchar(64) COLLATE ascii_bin NOT NULL,
   `sales` int(11) NOT NULL
 )

@@ -14,7 +14,7 @@ $weekstart = date("Y-m-d", strtotime($lastday . " - 6 days"));
 $zconn = new zmysqlConn();
 
 $_sql_ = 
-	"SELECT %d, '%s', stats.agentid,  accounts.username, companies.officename, 
+	"SELECT %d, '%s', stats.agentid,  accounts.username, agents.ag1stname, companies.officename, 
 		sum(sales_number - chargebacks) as sales 
 	FROM stats, accounts, agents, companies   
 	WHERE %s

@@ -225,20 +225,6 @@ echo $scripts_for_layout;
 						<?php
 						}
 						?>
-						<!--  
-						<li>
-						<?php
-						/*
-						$menuitemscount++;
-						echo $html->link('<span>LIVE MODELS</span>',
-							'#models_div',
-							array('rel' => 'dropmenu_onlinemodels', 'class' => 'iml_models'),
-							false, false
-						);
-						*/
-						?>
-						</li>
-						-->
 						<?php
 						if ($role != -1) {//menas everyone
 							$menuitemscount++;
@@ -515,11 +501,6 @@ echo $scripts_for_layout;
 				?>
 
 				<!--everyone drop down menu -->
-				<div id="dropmenu_onlinemodels" class="dropmenudiv_e"
-					style="width: 110px;">
-					<a class="iml_models" href="#models_div"> <font><b>IMLIVE</b> </font>
-					</a>
-				</div>
 				<div id="dropmenu_logs" class="dropmenudiv_e" style="width: 135px;">
 					<?php
 					if ($role == 2) {
@@ -706,42 +687,6 @@ echo $scripts_for_layout;
 	<?php
 	}
 	?>
-
-	<!-- for "LIVE MODELS" -->
-	<div style="display: none;">
-		<div id="models_div">
-			<?php
-			echo $html->image('indicator_medium.gif',
-				array(
-					'id' => 'models_loading_img',
-					'style' => 'margin:220px 0px 0px 390px;'
-				)
-			);
-			?>
-			<iframe style="width: 800px; height: 460px;" frameborder="0"
-				id="models_iframe"> </iframe>
-		</div>
-	</div>
-	<script type="text/javascript" language="javascript">
-		jQuery(document).ready(function() {
-			jQuery("a.iml_models").fancybox({
-				'autoDimensions' : false,
-				'hideOnContentClick': false,
-				'overlayOpacity': 0.6,
-				'overlayColor': '#0A0A0A',
-				'width': 800,
-				'height': 460,
-				'onStart': function() {
-					jQuery("#models_iframe").attr("src", "<?php echo $html->url(array('controller' => 'pages', 'action' => 'iml_online'), true); ?>");
-					jQuery("#models_iframe").css("display", "none");
-					jQuery("#models_iframe").load(function() {
-						jQuery("#models_iframe").css("display", "block");
-						jQuery("#models_loading_img").css("display", "none");
-					})
-				}
-			});
-		});
-	</script>
 
 	<!-- for tab menu -->
 	<script type="text/javascript">

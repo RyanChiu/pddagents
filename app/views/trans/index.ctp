@@ -143,22 +143,22 @@ if (!empty($notes)) {
 		?>
 		<tr <?php echo $i <= 3 ? 'style="font-weight:bold;"' : ''; ?>>
 			<td align="center"><?php echo $i; ?></td>
-			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r['Top10Stats']['officename'] : $r['Top10Stats']['officename']; ?></td>
+			<td align="center"><?php echo $r['Top10']['sales'] > 0 ? $r['Top10']['officename'] : $r['Top10']['officename']; ?></td>
 			<td align="center">
 				<font style="font-size: 9pt;">
 				<?php
-				echo $r[0]['sales'] > 0 ? $r['Top10Stats']['username'] : $r['Top10Stats']['username'];
+				echo $r['Top10']['sales'] > 0 ? $r['Top10']['username'] : $r['Top10']['username'];
 				?>
 				</font>
 				<font style="font-size: 10pt;">(
 				<?php
-				//$showname = $r['Top10Stats']['ag1stname'] . " " . $r['Top10Stats']['aglastname'];
-				$showname = $r['Top10Stats']['ag1stname'];
+				//$showname = $r['Top10']['ag1stname'] . " " . $r['Top10']['aglastname'];
+				$showname = $r['Top10']['ag1stname'];
 				echo strlen($showname) > 20 ? (substr($showname, 0, 17) . "...") : $showname;
 				?>
 				)</font>
 			</td>
-			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r[0]['sales'] : '0'; ?></td>
+			<td align="center"><?php echo $r['Top10']['sales'] > 0 ? $r['Top10']['sales'] : '0'; ?></td>
 		</tr>
 		<?php
 		}
@@ -197,22 +197,22 @@ if (!empty($notes)) {
 		?>
 		<tr <?php echo $i <= 3 ? 'style="font-weight:bold;"' : ''; ?>>
 			<td align="center"><?php echo $i; ?></td>
-			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r['Top10Stats']['officename'] : $r['Top10Stats']['officename']; ?></td>
+			<td align="center"><?php echo $r['Top10']['sales'] > 0 ? $r['Top10']['officename'] : $r['Top10']['officename']; ?></td>
 			<td align="center">
 				<font style="font-size: 9pt;">
 				<?php
-				echo $r[0]['sales'] > 0 ? $r['Top10Stats']['username'] : $r['Top10Stats']['username'];
+				echo $r['Top10']['sales'] > 0 ? $r['Top10']['username'] : $r['Top10']['username'];
 				?>
 				</font>
 				<font style="font-size: 10pt;">(
 				<?php
-				//$showname = $r['Top10Stats']['ag1stname'] . " " . $r['Top10Stats']['aglastname'];
-				$showname = $r['Top10Stats']['ag1stname'];
+				//$showname = $r['Top10']['ag1stname'] . " " . $r['Top10']['aglastname'];
+				$showname = $r['Top10']['ag1stname'];
 				echo strlen($showname) > 20 ? (substr($showname, 0, 17) . "...") : $showname;
 				?>
 				)</font>
 			</td>
-			<td align="center"><?php echo $r[0]['sales'] > 0 ? $r[0]['sales'] : '0'; ?></td>
+			<td align="center"><?php echo $r['Top10']['sales'] > 0 ? $r['Top10']['sales'] : '0'; ?></td>
 		</tr>
 		<?php
 		}

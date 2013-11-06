@@ -665,8 +665,10 @@ echo $scripts_for_layout;
 			<p style="text-align: center; margin: 9px 0px 0px 9px;">
 				<?php
 				echo $html->link('<font style="font-weight:bold;">Enter</font>',
-						array('controller' => 'trans', 'action' => 'pass'),
-						array('onclick' => 'javascript:jQuery.fancybox.close();',),
+						"#",
+						array('onclick' => 'javascript:jQuery.fancybox.close();jQuery.post("' 
+							. $html->url(array("controller" => "trans", "action" => "pass")) 
+							. '", function(data) {});',),
 						false, false
 				);
 				?>

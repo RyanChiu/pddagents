@@ -32,5 +32,5 @@ $rs = mysql_query("delete from top10s where flag = 1", $zconn->dblink)
 	or die ("Something wrong with: " . mysql_error() . "\n");
 $rs = mysql_query("insert into top10s " . $sql, $zconn->dblink)
 	or die ("Something wrong with: " . mysql_error() . "\n");
-echo "top10s generated.\n";
+echo "top10s generated.(" . date("Y-m-d H:i:s") . ")\n";
 ?>

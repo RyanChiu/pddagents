@@ -11,7 +11,7 @@ class TransController extends AppController {
 		'Link', 'Clickout', 'AgentSiteMapping', 'Type',
 		'Site', 'SiteExcluding', 'Stats',
 		'ViewAdmin', 'ViewCompany', 'ViewAgent', 'ViewLiteAgent',
-		'ViewStats', 'ViewMapping', 'SiteManual',
+		'ViewStats', 'ViewMapping', 'SiteManual', 'Top10',
 		'FakeContactUs'
 	);
 	var $components = array(
@@ -356,13 +356,23 @@ class TransController extends AppController {
 		//avoid those data which are not in types
 		$conds['startdate'] = '0000-00-00';
 		$conds['enddate'] = date('Y-m-d');
-		$rs = array();//$this->__top10($conds);
+		$rs = $this->Top10->find('all',
+			array(
+				'conditions' => array('flag' => 0),
+				'order' => 'sales desc'
+			)
+		);
 		$this->set(compact('rs'));
 		$weekend = date("Y-m-d", strtotime(date('Y-m-d') . " Saturday"));
 		$weekstart = date("Y-m-d", strtotime($weekend . " - 6 days"));
 		$conds['startdate'] = $weekstart;
 		$conds['enddate'] = $weekend;
-		$weekrs = array();//$this->__top10($conds);
+		$weekrs = $this->Top10->find('all',
+			array(
+				'conditions' => array('flag' => 1),
+				'order' => 'sales desc'
+			)
+		);
 		$this->set(compact('weekrs'));
 		$this->set(compact('weekstart'));
 		$this->set(compact('weekend'));

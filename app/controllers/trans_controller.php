@@ -239,7 +239,11 @@ class TransController extends AppController {
 		$this->layout = 'defaultlayout';
 		
 		$lastday = date("Y-m-d", strtotime(date('Y-m-d') . " Sunday"));
-		$lastday = date("Y-m-d", strtotime($lastday . " - 1 days"));
+		if (date("w") == 0) {
+			$lastday = date("Y-m-d", strtotime($lastday . " + 6 days"));
+		} else {
+			$lastday = date("Y-m-d", strtotime($lastday . " - 1 days"));
+		}
 		$weekend = $lastday;
 		$weekstart = date("Y-m-d", strtotime($lastday . " - 6 days"));
 		$periods = array();

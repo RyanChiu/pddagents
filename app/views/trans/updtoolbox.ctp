@@ -38,7 +38,7 @@ echo $form->end();
 <script type="text/javascript">
 	CKEDITOR.replace('SiteManualHtml',
 		{
-	        filebrowserUploadUrl : '/act/trans/upload',
+	        filebrowserUploadUrl : '/pdd/trans/upload',
 	        filebrowserWindowWidth : '640',
 	        filebrowserWindowHeight : '480'
 	    }

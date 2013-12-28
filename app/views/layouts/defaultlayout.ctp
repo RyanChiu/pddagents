@@ -643,7 +643,7 @@ echo $scripts_for_layout;
 				YOUR
 				<?php echo '"' . implode("\", \"", $excludedsites) . '"'; ?>
 				LINKS HAVE BEEN SUSPENDED, PLEASE CONTACT <a
-					href="mailto:support@PayDirtDollars.com"><font color="red">CVZ
+					href="mailto:support@PayDirtDollars.com"><font color="red">PDD
 						SUPPORT</font> </a> FOR MORE INFO.<br /> <a
 					href="mailto:support@PayDirtDollars.com"><font color="red">support@PayDirtDollars.com</font>
 				</a>

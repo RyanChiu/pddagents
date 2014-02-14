@@ -44,6 +44,8 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 	$unique = strtolower($unique);
 	$ch = (isset($_GET['ch']) ? trim($_GET['ch']) : (isset($_POST['ch']) ? trim($_POST['ch']) : ''));
 	$ch = intval($ch);
+	$trxid = (isset($_GET['transactionid']) ? trim($_GET['transactionid']) : (isset($_POST['transactionid']) ? trim($_POST['transactionid']) : ''));
+	$trxid = intval($trxid);
 	$conn = new zmysqlConn();
 	$sql = "select a.*, g.companyid, b.id as 'typeid' 
 		from agent_site_mappings a, sites s, accounts n, types b, agents g, companies m 
@@ -77,8 +79,8 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 				}
 			}
 
-			$sql = "insert into stats (agentid, companyid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime)"
-			. " values ($agid, $comid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime')";
+			$sql = "insert into stats (agentid, companyid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime, transactionid)"
+			. " values ($agid, $comid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime', $trxid)";
 			//echo "$sql($i/$ch)\n"; continue; //for debug;
 
 			if (mysql_query($sql, $conn->dblink) === false) {

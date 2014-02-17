@@ -33,7 +33,7 @@ $err = "";
 $s = "";
 /*actually save the data into stats*/
 if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
-	$s = "from ip: $ip, accepted";
+	$s = "from ip: $ip, accepted!";
 
 	$stamp = (isset($_GET['stamp']) ? trim($_GET['stamp']) : (isset($_POST['stamp']) ? trim($_POST['stamp']) : ''));
 	$stamp = strtolower($stamp);
@@ -53,6 +53,7 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 			and a.agentid = g.id and g.companyid = m.id
 			and a.agentid = n.id and n.username = '$agent'
 		ORDER BY typeid";
+	//echo "$sql\n"; continue; //for debug;
 	$rs = mysql_query($sql, $conn->dblink);
 	$i = 0;
 	while ($r = mysql_fetch_assoc($rs)) {
@@ -66,6 +67,7 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 			$uniques = ($unique == 'y' ? 1 : 0);
 			$sales = ($type == 'sale' ? 1 : 0);
 			$trxtime = $now->format("Y-m-d H:i:s");
+			$donothing = false;
 			if ($type == 'sale') {
 				if (!empty($stamp)) {
 					$ts = DateTime::createFromFormat("Ymd_His00", $stamp);
@@ -77,14 +79,30 @@ if (true || $ip == "66.180.199.11" || $ip == "127.0.0.1") {
 				} else {
 					$trxtime = $now->format("Y-m-d 00:00:02");
 				}
+				/*
+				 * check if $trxid already exists
+				 */
+				$tsql = sprintf("select * from stats where siteid = %d and transactionid = %d", $siteid, $trxid);
+				$trs = mysql_query($tsql, $conn->dblink);
+				if ($trs === false) {
+					echo "error:failed to search transactionid '$trxid'\n";
+				} else {
+					if (mysql_num_rows($trs) > 0) {
+						$donothing = true;
+					}
+				}
 			}
 
-			$sql = "insert into stats (agentid, companyid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime, transactionid)"
-			. " values ($agid, $comid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime', $trxid)";
-			//echo "$sql($i/$ch)\n"; continue; //for debug;
-
-			if (mysql_query($sql, $conn->dblink) === false) {
-				$err = mysql_error();
+			if (!$donothing) {
+				$sql = "insert into stats (agentid, companyid, raws, uniques, chargebacks, signups, frauds, sales_number, typeid, siteid, campaignid, trxtime, transactionid)"
+					. " values ($agid, $comid, $clicks, $uniques, 0, 0, 0, $sales, $typeid, $siteid, '$campid', '$trxtime', $trxid)";
+				//echo "$sql($i/$ch)\n"; continue; //for debug;
+	
+				if (mysql_query($sql, $conn->dblink) === false) {
+					$err = mysql_error();
+				}
+			} else {
+				echo "do nothing, cause transactionid '$trxid' already exists.\n";
 			}
 		}
 		$i++;

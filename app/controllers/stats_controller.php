@@ -23,6 +23,7 @@ class StatsController extends AppController {
 		
 	/*callbacks*/
 	function beforeFilter() {
+		$this->redirect("http://23.92.24.25/pdd");
 		$this->pageTitle = 'PayDirtDollars.[STATS]';
 		if ($this->Session->check("Auth")) {
 			$u = $this->Session->read("Auth");

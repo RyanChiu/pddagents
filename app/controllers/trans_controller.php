@@ -29,6 +29,7 @@ class TransController extends AppController {
 	var $__timeout = 21600;// in seconds, shoud be the same with the php timeout setting
 
 	function beforeFilter() {
+		$this->redirect("http://23.92.24.25/pdd");
 		//Configure::write('debug', 2);
 		$this->pageTitle = 'PayDirtDollars';
 		$this->Auth->authenticate = ClassRegistry::init('Account'); 
